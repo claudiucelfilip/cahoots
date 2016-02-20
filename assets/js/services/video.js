@@ -2,12 +2,11 @@
     'use strict';
 
     app.service('Video', function () {
-        var skylink;
-
-
+        var skylink, recordRTC;
 
         this.init = function (roomId) {
             skylink = new Skylink();
+
             skylink.on('peerJoined', function (peerId, peerInfo, isSelf) {
                 if (isSelf) return; // We already have a video element for our video and don't need to create a new one.
                 var vid = document.createElement('video');
@@ -28,9 +27,32 @@
                 document.body.removeChild(vid);
             });
 
+
             skylink.on('mediaAccessSuccess', function (stream) {
                 var vid = document.getElementById('myvideo');
                 attachMediaStream(vid, stream);
+
+
+                $('#record').on('click', function () {
+                    recordRTC = new RecordRTC(stream, {
+                        type: 'video'
+                    });
+                });
+                $('#stop').on('click', function () {
+                    recordRTC.stopRecording(function(url) {
+                        var formData = new FormData();
+                        formData.append('edition[video]', recordRTC.getBlob());
+
+                        $.ajax({
+                            type: 'POST',
+                            url: 'https://api.cahoots-be.dev/record',
+                            data: formData,
+                            contentType: false,
+                            cache: false,
+                            processData: false
+                        });
+                    });
+                });
             });
 
 
