@@ -68,11 +68,28 @@
                     return messageObject;
                 }
 
+                function on(event, callback) {
+                    if (typeof(channel) === 'undefined') {
+                        channel = pusher.subscribe('private-room-' + getRoomId())
+                    }
+                    channel.bind(event, callback);
+                }
+
+
+                function emit(event, payload) {
+                    channel.trigger(event, payload);
+
+                    return payload;
+                }
+
                 return {
                     setRoomId: setRoomId,
                     getRoomId: getRoomId,
                     sendMessage: sendMessage,
-                    getMessages: getMessages
+                    getMessages: getMessages,
+                    emit: emit,
+                    on: on,
+                    pusher: pusher
                 };
             }
         ]);

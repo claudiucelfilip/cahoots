@@ -13,7 +13,8 @@
                 url: 'https://cahoots-be.dev/'
             },
             events: {
-                messageCreated: 'client-messageCreated'
+                messageCreated: 'client-messageCreated',
+                message: 'client-partial-message'
             }
         })
         .config([

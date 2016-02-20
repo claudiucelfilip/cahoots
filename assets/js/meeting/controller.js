@@ -2,18 +2,30 @@
     'use strict';
 
     app.controller('MeetingCtrl',
-        function ($scope, $state, $stateParams, Pusher, Constants, Video, Speech, Api) {
+        function ($scope, $state, $stateParams, Pusher, Constants, Video, Speech, DataChan, Api) {
 
             Pusher.setRoomId($stateParams.roomId);
+            DataChan.init($stateParams.roomId);
 
             // Chat
             $scope.messages = [];
-            //Api.getMessages({ second: $stateRoomId }, function(data) {
-            //    $scope.messages = data;
-                Pusher.getMessages(function (data) {
-                    $scope.messages.push(data);
+            $scope.currentMessage;
+            $scope.currentStreamId;
+
+            Pusher.on(Constants.events.message, function(data) {
+                var index = _.findIndex($scope.messages, function(item) {
+                    return item.id == data.id
                 });
-            //});
+                if (index < 0) {
+                    $scope.messages.push(data);
+                } else {
+                    $scope.messages[index] = data;
+                }
+
+                $scope.currentMessage = data.text;
+                $scope.currentStreamId = data.streamId;
+                $scope.$digest();
+            });
 
 
             $scope.sendMessage = function (message) {

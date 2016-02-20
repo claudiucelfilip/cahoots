@@ -4,6 +4,11 @@
     app.service('Video', function () {
         var skylink, recordRTC;
 
+        var self = this;
+        this.peerIds = [];
+        this.myId;
+
+
         this.init = function (roomId) {
             skylink = new Skylink();
 
@@ -19,12 +24,17 @@
             skylink.on('incomingStream', function (peerId, stream, isSelf) {
                 if (isSelf) return;
                 var vid = document.getElementById(peerId);
+                vid.setAttribute('stream-id', stream.id);
+                self.peerIds.push(stream.id);
                 attachMediaStream(vid, stream);
             });
 
             skylink.on('peerLeft', function (peerId, peerInfo, isSelf) {
                 var vid = document.getElementById(peerId);
-                document.body.removeChild(vid);
+                if (vid) {
+                    document.body.removeChild(vid);
+                }
+
             });
 
 
@@ -32,6 +42,8 @@
                 var vid = document.getElementById('myvideo');
                 attachMediaStream(vid, stream);
 
+                vid.setAttribute('stream-id', stream.id);
+                self.myId = stream.id;
 
                 $('#record').on('click', function () {
                     recordRTC = new RecordRTC(stream, {
