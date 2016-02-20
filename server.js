@@ -2,9 +2,9 @@ var express = require('express');
 var app = express();
 var path = require('path');
 
-app.use(express.static('assets'));
+app.use('/assets', express.static(__dirname + '/assets'));
 
-app.get('*', function (req, res) {
+app.get(/^(?:(?!assets).)*$/, function (req, res) {
     if(req.url.indexOf('/assets/') === -1) {
         res.sendFile(path.join(__dirname + '/index.html'));
     }
