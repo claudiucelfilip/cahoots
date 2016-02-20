@@ -7,13 +7,28 @@
             '$resource',
             'Constants',
             function ($resource, Constants) {
-                return $resource(Constants.api.url + '/:first/:second/:third', {}, {
+                return $resource(Constants.api.url + ':first/:second/:third', { first: '@first', second: '@second', third: '@third'}, {
                     createRoom: {
                         method: 'POST',
                         params: {
-                            first: 'room'
+                            first: 'rooms'
                         },
                         isArray: false,
+                        cache: false
+                    },
+                    getRoom: {
+                        method: 'GET',
+                        params: {
+                            first: 'rooms'
+                        },
+                        cache: false
+                    },
+                    addUser: {
+                        method: 'POST',
+                        params: {
+                            first: 'rooms',
+                            third: 'users'
+                        },
                         cache: false
                     },
                     getMessages: {

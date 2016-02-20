@@ -17,17 +17,23 @@
     </style>
     <link rel="stylesheet" href="assets/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/shift-text.css">
 
     <script src="assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     <base href="/">
 
 </head>
 <body>
+    <div class="tagline-container">
+        <div>
+            <span class="tagline">The tagline of tomorrow, today.</span>
+        </div>
+    </div>
     <div ng-app="cahoots" class="container" ui-view=""></div>
 
     <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-1.11.2.js"><\/script>')</script>
     <script src="https://js.pusher.com/3.0/pusher.min.js"></script>
-
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
     <script src="assets/js/vendor/bower/lodash/dist/lodash.js"></script>
     <script src="assets/js/vendor/bower/datachannel/DataChannel.js"></script>
     <script src="assets/js/vendor/bootstrap.min.js"></script>
@@ -38,9 +44,13 @@
     <script src="assets/js/vendor/bower/pusher-angular/lib/pusher-angular.min.js"></script>
     <script src="assets/js/vendor/bower/recordrtc/RecordRTC.js"></script>
     <script src="assets/js/vendor/bower/ngstorage/ngStorage.min.js"></script>
+    <script src="assets/js/vendor/TweenMax.min.js"></script>
+    <script src="assets/js/vendor/shift-text.js"></script>
 
     <script src="assets/js/app.js"></script>
+    <script src="assets/js/common/utils.js"></script>
 
+    <script src="assets/js/services/utils.js"></script>
     <script src="assets/js/services/translation.js"></script>
     <script src="assets/js/services/speech.js"></script>
     <script src="assets/js/services/video.js"></script>

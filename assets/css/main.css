@@ -8,3 +8,13 @@
 #subtitle.final {
     background: #ddeeff;
 }
+
+.video-container {
+    display: table;
+    width: 200px;
+
+}
+.video-container video {
+    width: 100%;
+}
+

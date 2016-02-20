@@ -40,38 +40,17 @@
                     }
                 });
 
-                function setRoomId(id) {
+                function init(id) {
                     roomId = id;
+                    channel = pusher.subscribe('private-room-' + roomId);
                 }
 
                 function getRoomId() {
                     return roomId;
                 }
 
-                function getMessages(callback) {
-                    if(typeof(channel) === 'undefined') {
-                        channel = pusher.subscribe('private-room-' + getRoomId())
-                    }
-                    channel.bind(Constants.events.messageCreated, callback);
-                }
-
-
-                function sendMessage(message) {
-                    var messageObject = {
-                        socketId: pusher.socketId,
-                        text: message,
-                        date: new Date()
-                    };
-
-                    channel.trigger(Constants.events.messageCreated, messageObject);
-
-                    return messageObject;
-                }
-
                 function on(event, callback) {
-                    if (typeof(channel) === 'undefined') {
-                        channel = pusher.subscribe('private-room-' + getRoomId())
-                    }
+
                     channel.bind(event, callback);
                 }
 
@@ -83,10 +62,8 @@
                 }
 
                 return {
-                    setRoomId: setRoomId,
+                    init: init,
                     getRoomId: getRoomId,
-                    sendMessage: sendMessage,
-                    getMessages: getMessages,
                     emit: emit,
                     on: on,
                     pusher: pusher

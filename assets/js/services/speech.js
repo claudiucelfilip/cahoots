@@ -5,7 +5,7 @@
         window.webkitSpeechRecognition ||
         null;
 
-    app.service('Speech', function (Translation, Pusher, Constants, Video, DataChan) {
+    app.service('Speech', function (Translation, Pusher, Constants, Video, DataChan, Utils) {
 
 
         this.init = function () {
@@ -22,10 +22,8 @@
             recognizer.continuous = true;
             recognizer.interimResults = true;
 
-            function generateId() {
-                return Math.floor(Math.random() * 10000) + '';
-            }
-            var currentMessageId =  generateId();
+
+            var currentMessageId =  Utils.generateId();
 
             recognizer.onresult = function (event) {
                 var str = '';
@@ -33,20 +31,22 @@
                 for (var i = event.resultIndex; i < event.results.length; i++) {
                     if (event.results[i].isFinal) {
                         str = event.results[i][0].transcript;
-                        currentMessageId =  generateId();
+                        currentMessageId =  Utils.generateId();
+
+                        Pusher.emit(Constants.events.message, {
+                            id: currentMessageId,
+                            text: str,
+                            streamId: Video.myStream.id
+                        });
                     } else {
                         str += event.results[i][0].transcript;
                     }
 
-                    Pusher.emit(Constants.events.message, {
-                        id: currentMessageId,
-                        text: str,
-                        streamId: Video.myId
-                    });
+
                     DataChan.emit(Constants.events.message, {
                         id: currentMessageId,
                         text: str,
-                        streamId: Video.myId
+                        streamId: Video.myStream.id
                     });
                 }
 

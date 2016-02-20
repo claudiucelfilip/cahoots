@@ -7,6 +7,16 @@
             function (Pusher, Constants) {
                 var dataChannel;
 
+                function messageHandler(data) {
+
+                    for (var i = 0; i < handlers.length; i++) {
+                        if (handlers[i].event === data.event) {
+                            handlers[i].callback(data.payload);
+                        }
+                    }
+
+                }
+
                 function init(roomId) {
 
                     dataChannel = new DataChannel(roomId);
@@ -15,13 +25,7 @@
                         console.log("Data Channel Error:", error);
                     };
 
-                    dataChannel.onmessage = function (data) {
-                        for (var i = 0; i < handlers; i++) {
-                            if (handlers[i].event === data.event) {
-                                handlers[i].callback(data.payload);
-                            }
-                        }
-                    };
+                    dataChannel.onmessage = messageHandler;
 
                     dataChannel.onopen = function () {
                         console.log('The Data channel is opened');
@@ -31,28 +35,16 @@
                         console.log("The Data Channel is Closed");
                     };
 
-
-                    dataChannel.openSignalingChannel = function(config) {
-
-                        Pusher.on(Constants.events.message, config.onmessage);
-
-                        Pusher.pusher.send = function (data) {
-                            Pusher.emit(Constants.events.message, data);
-                        };
-
-                        if (config.onopen) setTimeout(config.onopen, 1);
-                        return Pusher.pusher;
-                    }
-
-
                 }
 
                 function emit(event, payload) {
-                    debugger;
-                    dataChannel.send({
+
+                    var data = {
                         event: event,
                         payload: payload
-                    });
+                    };
+                    messageHandler(data);
+                    dataChannel.send(data);
                 }
 
                 var handlers = [];

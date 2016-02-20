@@ -40,7 +40,4 @@
                 $urlRouterProvider.otherwise('/login');
             }
         ])
-        .run(function() {
-
-        });
 }());

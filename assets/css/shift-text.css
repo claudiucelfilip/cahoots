@@ -1,0 +1,60 @@
+
+/**
+ * Position
+ * @param {number} $top (0) - Top Position
+ * @param {number} $right ($top) - Right Position
+ * @param {number} $bottom ($top) - Bottom Position
+ * @param {number} $left ($right) - Left Position
+ */
+.tagline-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #050b1b;
+    font: 1.2em/1 Ubuntu;
+    color: #fff;
+    position: relative;
+
+}
+
+.tagline-container div {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    text-align: center;
+    font-weight: 200;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+}
+.tagline-container div .tagline-container,
+.tagline-container div .tagline {
+    position: absolute;
+    top: 50%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    white-space: nowrap;
+}
+.tagline-container div .character {
+    display: inline-block;
+}
+.tagline-container div .red {
+    color: red;
+}
+.tagline-container div .green {
+    color: green;
+}
+.tagline-container div .blue {
+    color: blue;
+}
+
+@media screen and (max-width: 800px) {
+    .tagline-container {
+        font-size: 12px;
+    }
+}
