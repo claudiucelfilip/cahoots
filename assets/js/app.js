@@ -29,4 +29,7 @@
                 $urlRouterProvider.otherwise('/login');
             }
         ])
+        .run(function(Speech, Translation, Video) {
+
+        });
 }());
