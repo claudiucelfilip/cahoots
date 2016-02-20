@@ -28,7 +28,7 @@ var VIDEO = (function() {
 
     skylink.init({
         apiKey: 'a1a9c9c3-da9a-417c-bb2b-0ebc55b119e3',
-        defaultRoom: 'test'
+        defaultRoom: COMMON.roomId
     }, function() {
         skylink.joinRoom({
             audio: true,

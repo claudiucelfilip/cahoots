@@ -1,64 +1,33 @@
 var SPEECH = (function () {
-    var recognition;
-    var $subtitle = $('#subtitle');
-
-    if (window.webkitSpeechRecognition !== 'undefined') {
-        recognition = new webkitSpeechRecognition();
-    } else if (window.SpeechRecognition !== 'undefined') {
-        recognition = new SpeechRecognition();
-    } else {
-        return alert('No Speech API');
-    }
-
-    recognition.continuous = true;
-    recognition.interimResults = true;
-
-    recognition.lang = "en-US";
-    recognition.maxAlternatives = 1;
-
-    recognition.onspeechstart = function() {
-        console.log('onspeechstart');
-    };
-
-    recognition.onspeechend = function() {
-        console.log('onspeechend');
-    };
-
-    recognition.onnomatch = function(event) {
-        console.log('onnomatch', event);
-
-    };
-
-    recognition.onerror = function(event) {
-        console.log('onerror');
-    };
-
-    recognition.onstart = function() {
+    // Test browser support
+    window.SpeechRecognition = window.SpeechRecognition       ||
+        window.webkitSpeechRecognition ||
+        null;
 
 
-    };
+    var recognizer = new window.SpeechRecognition();
+    var transcription = document.getElementById('subtitle');
 
-    recognition.onend = function() {
 
-    };
+    recognizer.continuous = true;
 
-    recognition.onresult = function(event) {
+    recognizer.onresult = function(event) {
+        transcription.textContent = '';
 
-        if (typeof(event.results) === 'undefined') {
-            recognition.stop();
-            return;
-        }
-
-        for (var i = event.resultIndex; i < event.results.length; ++i) {
-            $subtitle.text(event.results[i][0].transcript);
+        for (var i = event.resultIndex; i < event.results.length; i++) {
             if (event.results[i].isFinal) {
-                $subtitle.addClass('final');
+                transcription.textContent = event.results[i][0].transcript + ' (Confidence: ' + event.results[i][0].confidence + ')';
             } else {
-                $subtitle.removeClass('final');
+                transcription.textContent += event.results[i][0].transcript;
             }
         }
     };
 
-    recognition.start();
+    recognizer.start();
+
+    // Listen for errors
+    recognizer.onerror = function(event) {
+        console.log('Recognition error: ' + event.message);
+    };
 
 })();
