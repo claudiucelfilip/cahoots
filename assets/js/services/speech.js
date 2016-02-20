@@ -15,15 +15,22 @@ var SPEECH = (function () {
     recognizer.continuous = true;
 
     recognizer.onresult = function(event) {
-        transcription.textContent = '';
+        var str = '';
 
         for (var i = event.resultIndex; i < event.results.length; i++) {
             if (event.results[i].isFinal) {
-                transcription.textContent = event.results[i][0].transcript + ' (Confidence: ' + event.results[i][0].confidence + ')';
+                str = event.results[i][0].transcript;
             } else {
-                transcription.textContent += event.results[i][0].transcript;
+                str += event.results[i][0].transcript;
             }
         }
+
+        TRANSLATION.translate(str, 'ro').then(function(result) {
+            if (result && result.text) {
+                transcription.textContent = result.text.join();
+            }
+        })
+
     };
 
     recognizer.start();
