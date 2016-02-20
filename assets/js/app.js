@@ -8,7 +8,7 @@
         ])
         .constant('Constants', {
             events: {
-                messageCreated: 'messageCreated'
+                messageCreated: 'client-messageCreated'
             }
         })
         .config([

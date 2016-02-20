@@ -26,7 +26,7 @@
                     console.log(states.current)
                     switch (states.current) {
                         case 'connected':
-                            //COMMON.socketId = pusher.connection.socked_id;
+                            pusher.socketId = pusher.connection.socked_id;
                             break;
                         case 'disconnected':
                         case 'failed':
