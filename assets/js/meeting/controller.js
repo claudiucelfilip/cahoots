@@ -95,7 +95,7 @@
 
                 $scope.currentMessage = data.text;
 
-                Video.setMainStreamById(data.streamId);
+
 
                 if (!$scope.$$phase) {
                     $scope.$digest();
@@ -116,12 +116,16 @@
             // Video
             Video.init($stateParams.roomId);
 
+            $scope.recording = false;
+
             $scope.startRecording = function () {
                 Video.startRecording();
+                $scope.recording = true;
             };
 
             $scope.stopRecording = function () {
                 Video.stopRecording();
+                $scope.recording = false;
             };
 
             // Speech

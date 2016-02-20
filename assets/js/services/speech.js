@@ -25,8 +25,9 @@
 
             var currentMessageId =  Utils.generateId();
 
-            recognizer.onresult = function (event) {
+            recognizer.onresult = $.throttle(250, function (event) {
                 var str = '';
+
 
                 for (var i = event.resultIndex; i < event.results.length; i++) {
                     if (event.results[i].isFinal) {
@@ -38,6 +39,7 @@
                             text: str,
                             streamId: Video.myStream.id
                         });
+
                     } else {
                         str += event.results[i][0].transcript;
                     }
@@ -50,7 +52,7 @@
                     });
                 }
 
-            };
+            });
 
 
             // Listen for errors

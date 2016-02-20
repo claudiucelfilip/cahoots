@@ -19,12 +19,13 @@
             if (currentMainStreamId === streamId) {
                 return;
             }
-            currentMainStreamId =  streamId;
+
             var index = _.findIndex(self.streams, function(item) {
                 return item.id === streamId;
             });
 
             if (index !== -1) {
+                currentMainStreamId =  streamId;
                 self.setMainStream(self.streams[index]);
             }
         };
@@ -58,10 +59,11 @@
             skylink.on('mediaAccessSuccess', function (stream) {
                 var vid = document.getElementById('myvideo');
                 attachMediaStream(vid, stream);
-                self.setMainStream(stream);
+                //self.setMainStream(stream);
 
                 vid.setAttribute('stream-id', stream.id);
                 self.streams.push(stream);
+
                 self.myStream = stream;
 
             });

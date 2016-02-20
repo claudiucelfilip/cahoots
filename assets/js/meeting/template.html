@@ -23,15 +23,15 @@
 
     <ul class="chat-messages list-group">
         <li class="list-group-item" ng-hide="messages">No chat messages available</li>
-        <li class="list-group-item" ng-repeat="message in messages"> {{ message.socketId }}: {{ message.text }}</li>
+        <li class="list-group-item" ng-repeat="message in messages"> {{ message.streamId }}: {{ message.text }}</li>
     </ul>
 </div>
 <section class="video-container">
     <video id="myvideo" autoplay muted></video>
 </section>
-<video id="mainVideo" autoplay></video>
+<!--<video id="mainVideo" ng-class="{recording: recording}" autoplay muted></video>-->
 
 <h2 id="subtitle">{{currentMessage}}</h2>
 <button id="share">Share Screen</button>
-<button id="record">Record</button>
-<button id="stop">Stop Record</button>
+<button id="record" ng-disabled="recording" ng-click="startRecording()">Record</button>
+<button id="stop" ng-click="stopRecording()">Stop Record</button>

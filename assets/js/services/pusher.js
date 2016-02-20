@@ -50,12 +50,13 @@
                 }
 
                 function on(event, callback) {
-
+                    channel = pusher.subscribe('private-room-' + roomId);
                     channel.bind(event, callback);
                 }
 
 
                 function emit(event, payload) {
+                    channel = pusher.subscribe('private-room-' + roomId);
                     channel.trigger(event, payload);
 
                     return payload;
