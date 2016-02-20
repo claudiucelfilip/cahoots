@@ -2,23 +2,22 @@
     'use strict';
 
     app.controller('MeetingCtrl',
-        function ($scope, $state, $stateParams, Pusher, Constants, Video, Speech) {
+        function ($scope, $state, $stateParams, Pusher, Constants, Video, Speech, Api) {
+
+            Pusher.setRoomId($stateParams.roomId);
 
             // Chat
             $scope.messages = [];
+            //Api.getMessages({ second: $stateRoomId }, function(data) {
+            //    $scope.messages = data;
+                Pusher.getMessages(function (data) {
+                    $scope.messages.push(data);
+                });
+            //});
 
-            $scope.messagesChannel = Pusher.subscribe('private-room-' + $stateParams.roomId);
-            $scope.messagesChannel.bind(Constants.events.messageCreated, function (data) {
-                $scope.messages.push(data);
 
-            });
-
-            $scope.sendMessage = function () {
-                $scope.messagesChannel.trigger(Constants.events.messageCreated, {
-                    socketId: Pusher.socketId,
-                    text: $scope.message,
-                    date: new Date()
-                })
+            $scope.sendMessage = function (message) {
+                $scope.messages.push(Pusher.sendMessage(message));
             };
 
             // Video

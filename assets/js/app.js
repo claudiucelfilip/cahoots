@@ -4,9 +4,14 @@
     angular
         .module('cahoots', [
             'ui.router',
+            'ngStorage',
+            'ngResource',
             'pusher-angular'
         ])
         .constant('Constants', {
+            api: {
+                url: 'https://cahoots-be.dev/'
+            },
             events: {
                 messageCreated: 'client-messageCreated'
             }
@@ -20,7 +25,7 @@
 
                 $stateProvider
                     .state('login', {
-                        url: '/login',
+                        url: '/',
                         controller: 'LoginCtrl',
                         templateUrl: 'assets/js/login/template.html'
 

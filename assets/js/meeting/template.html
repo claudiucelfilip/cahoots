@@ -2,12 +2,12 @@
 <div class="chat">
     <div class="chat-input">
         <input name="message" ng-model="message" class=" orm-control" placeholder="Message"></input>
-        <button ng-click="sendMessage()" class="chat-send btn btn-primary">Send</button>
+        <button ng-click="sendMessage(message)" class="chat-send btn btn-primary">Send</button>
     </div>
 
     <ul class="chat-messages list-group">
         <li class="list-group-item" ng-hide="messages">No chat messages available</li>
-        <li class="list-group-item" ng-repeat="message in messages">{{ message.socketId }}: {{message.text }}</li>
+        <li class="list-group-item" ng-repeat="message in messages"> {{ message.socketId }}: {{message.text }}</li>
     </ul>
 </div>
 

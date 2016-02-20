@@ -1,0 +1,12 @@
+<div id="login">
+    <form name="login" novalidate>
+        <input name="name" ng-model="name" required placeholder="Your Name"></input>
+        <div ng-show="login.name.$dirty && login.name.$error.required">Tell us your name.</div>
+
+        <input name="room" ng-model="room" required placeholder="Room Name"></input>
+        <div ng-show="login.room.$dirty && login.room.$error.required">Tell us the room name.</div>
+
+        <button ng-click="createRoom()" class="chat-send btn btn-primary">Create Room</button>
+    </form>
+
+</div>
