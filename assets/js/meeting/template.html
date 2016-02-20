@@ -1,3 +1,19 @@
+<div ng-show="error">{{ error }}</div>
+
+<!-- User request -->
+<div ng-show="requestUser">
+        {{ requestUserError }}
+        <form name="request" novalidate>
+            <input name="userName" ng-model="userName" required placeholder="Your Name"></input>
+            <div ng-show="request.userName.$dirty && request.userName.$error.required">Tell us your name, please.</div>
+
+            <button ng-click="createRoom(userName)" ng-show="needToCreateRoom" class="btn btn-primary" ng-disabled="request.$invalid" ng-enter>Create Room</button>
+            <button ng-click="joinRoom(userName)" ng-hide="needToCreateRoom" class="btn btn-primary" ng-disabled="request.$invalid" ng-enter>Join Room</button>
+        </form>
+    </div>
+</div>
+
+
 <!-- Chat -->
 <div class="chat">
     <div class="chat-input">
@@ -7,11 +23,9 @@
 
     <ul class="chat-messages list-group">
         <li class="list-group-item" ng-hide="messages">No chat messages available</li>
-        <li class="list-group-item" ng-repeat="message in messages"> {{ message.socketId }}: {{message.text }}</li>
+        <li class="list-group-item" ng-repeat="message in messages"> {{ message.socketId }}: {{ message.text }}</li>
     </ul>
 </div>
-
-a
 
 <video id="myvideo" style="transform: rotateY(-180deg);" autoplay muted></video>
 <h2 id="subtitle"></h2>

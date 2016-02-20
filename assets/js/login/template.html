@@ -1,12 +1,17 @@
 <div id="login">
+    {{ error }}
     <form name="login" novalidate>
-        <input name="name" ng-model="name" required placeholder="Your Name"></input>
-        <div ng-show="login.name.$dirty && login.name.$error.required">Tell us your name.</div>
+        <input name="userName" ng-model="userName" required placeholder="Your Name"></input>
+        <div ng-show="login.userName.$dirty && login.userName.$error.required">Tell us your name.</div>
 
         <input name="room" ng-model="room" required placeholder="Room Name"></input>
         <div ng-show="login.room.$dirty && login.room.$error.required">Tell us the room name.</div>
 
-        <button ng-click="createRoom()" class="chat-send btn btn-primary">Create Room</button>
+        <button ng-click="createRoom()" class="chat-send btn btn-primary" ng-disabled="login.$invalid" ng-enter>Create Room</button>
     </form>
+
+    <ul ng-show="recentRooms">
+        <li ng-repeat="room in recentRooms"><a ui-sref="meeting({ roomId: room })">{{ room }}</a></li>
+    </ul>
 
 </div>
