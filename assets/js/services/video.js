@@ -1,10 +1,13 @@
-(function () {
+(function (app) {
     'use strict';
 
-    angular.module('cahoots')
-        .service('Video', function ($stateParams) {
-            var skylink = new Skylink();
+    app.service('Video', function () {
+        var skylink;
 
+
+
+        this.init = function (roomId) {
+            skylink = new Skylink();
             skylink.on('peerJoined', function (peerId, peerInfo, isSelf) {
                 if (isSelf) return; // We already have a video element for our video and don't need to create a new one.
                 var vid = document.createElement('video');
@@ -30,17 +33,20 @@
                 attachMediaStream(vid, stream);
             });
 
+
+            $('#share').on('click', function () {
+                skylink.shareScreen(true);
+            });
+
             skylink.init({
                 apiKey: 'a1a9c9c3-da9a-417c-bb2b-0ebc55b119e3',
-                defaultRoom: $stateParams.roomId
+                defaultRoom: roomId
             }, function () {
                 skylink.joinRoom({
                     audio: true,
                     video: true
                 });
             });
-            $('#share').on('click', function () {
-                skylink.shareScreen(true);
-            });
-        });
-})();
+        };
+    });
+})(angular.module('cahoots'));

@@ -1,12 +1,14 @@
-(function () {
+(function (app) {
     'use strict';
 
     window.SpeechRecognition = window.SpeechRecognition ||
         window.webkitSpeechRecognition ||
         null;
 
-    angular.module('cahoots')
-        .service('Speech', function (Translation) {
+    app.service('Speech', function (Translation) {
+
+
+        this.init = function () {
             var self = this;
 
             self.text = '';
@@ -37,12 +39,14 @@
 
             };
 
-            recognizer.start();
 
             // Listen for errors
             recognizer.onerror = function (event) {
                 console.log('Recognition error: ' + event.message);
             };
 
-        });
-})();
+            recognizer.start();
+        };
+
+    });
+})(angular.module('cahoots'));
