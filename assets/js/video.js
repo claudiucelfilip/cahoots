@@ -35,4 +35,7 @@ var VIDEO = (function() {
             video: true
         });
     });
+    $('#share').on('click', function() {
+        skylink.shareScreen(true);
+    });
 })();

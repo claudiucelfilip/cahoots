@@ -5,6 +5,9 @@ var SPEECH = (function () {
         null;
 
 
+    if (!SpeechRecognition) {
+        return;
+    }
     var recognizer = new window.SpeechRecognition();
     var transcription = document.getElementById('subtitle');
 
