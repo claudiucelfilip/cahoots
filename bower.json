@@ -15,10 +15,11 @@
     "test",
     "tests"
   ],
-  "devDependencies": {
-    "pusher": "^3.0.0"
-  },
   "dependencies": {
-    "skylinkjs": "^0.6.10"
+    "skylinkjs": "^0.6.10",
+    "angular": "^1.5.0",
+    "angular-ui-router": "^0.2.18",
+    "angular-resource": "^1.5.0",
+    "pusher-angular": "^0.1.9"
   }
 }
