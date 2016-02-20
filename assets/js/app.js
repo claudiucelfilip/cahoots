@@ -6,6 +6,11 @@
             'ui.router',
             'pusher-angular'
         ])
+        .constant('Constants', {
+            events: {
+                messageCreated: 'messageCreated'
+            }
+        })
         .config([
             '$locationProvider',
             '$stateProvider',

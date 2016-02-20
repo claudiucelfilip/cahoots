@@ -5,8 +5,16 @@
         '$scope',
         '$state',
         '$stateParams',
-        function($scope, $state, $stateParams) {
-            console.log($stateParams)
+        'Pusher',
+        'Constants',
+        function($scope, $state, $stateParams, Pusher, Constants) {
+
+            // Chat
+            $scope.channel = Pusher.subscribe('chat-' + $stateParams.roomId);
+            $scope.channel.bind(Constants.events.messageCreated, function(data) {
+                $('[data-remove]').remove();
+
+            });
         }
     ]);
 
