@@ -17,5 +17,8 @@
   ],
   "devDependencies": {
     "pusher": "^3.0.0"
+  },
+  "dependencies": {
+    "skylinkjs": "^0.6.10"
   }
 }

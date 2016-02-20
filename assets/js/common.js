@@ -1,5 +1,5 @@
 var COMMON = (function() {
-    var roomId = location.pathname;
+    var roomId = location.pathname || 'test';
 
     return {
         roomId: roomId

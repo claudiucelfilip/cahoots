@@ -1,16 +1,38 @@
 var VIDEO = (function() {
-    var webrtc = new SimpleWebRTC({
-        // the id/element dom element that will hold "our" video
-        localVideoEl: 'localVideo',
-        // the id/element dom element that will hold remote videos
-        remoteVideosEl: 'remotesVideos',
-        // immediately ask for camera access
-        autoRequestMedia: true
+    var skylink = new Skylink();
+
+    skylink.on('peerJoined', function(peerId, peerInfo, isSelf) {
+        if(isSelf) return; // We already have a video element for our video and don't need to create a new one.
+        var vid = document.createElement('video');
+        vid.autoplay = true;
+        vid.muted = true; // Added to avoid feedback when testing locally
+        vid.id = peerId;
+        document.body.appendChild(vid);
     });
 
-    // we have to wait until it's ready
-    webrtc.on('readyToCall', function () {
-        // you can name it anything
-        webrtc.joinRoom('your awesome room name');
+    skylink.on('incomingStream', function(peerId, stream, isSelf) {
+        if(isSelf) return;
+        var vid = document.getElementById(peerId);
+        attachMediaStream(vid, stream);
+    });
+
+    skylink.on('peerLeft', function(peerId, peerInfo, isSelf) {
+        var vid = document.getElementById(peerId);
+        document.body.removeChild(vid);
+    });
+
+    skylink.on('mediaAccessSuccess', function(stream) {
+        var vid = document.getElementById('myvideo');
+        attachMediaStream(vid, stream);
+    });
+
+    skylink.init({
+        apiKey: 'a1a9c9c3-da9a-417c-bb2b-0ebc55b119e3',
+        defaultRoom: 'test'
+    }, function() {
+        skylink.joinRoom({
+            audio: true,
+            video: true
+        });
     });
 })();
