@@ -78,9 +78,12 @@
         <span class="text">{{currentMessage}}</span>
     </h2>
     <div class="frame-container" ng-controller="FrameCtrl" ng-show="showFrame">
-        <input type="url" class="url-input" ng-model="frameUrl"/>
-        {{frameApi + frameUrl}}
-        <iframe src="{{frameApi + frameUrl}}" class="frame"></iframe>
+        <input type="text" class="url-input" ng-model="frameUrl" placeholder="https//www.google.com" ng-model-options="{updateOn : 'change blur'}"/>
+
+        <iframe ng-src="{{ trustSrc('https://cahoots.local:8080/proxy/' + frameUrl) }}" class="frame"></iframe>
+
+
+
     </div>
 </section>
 

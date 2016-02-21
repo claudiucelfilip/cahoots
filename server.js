@@ -17,9 +17,12 @@ app.get(/^(?:(?!assets|proxy).)*$/, function (req, res) {
 });
 
 app.use('/proxy/', function(req, res) {
-    var url = req.url.slice(1);
-    console.log(url)
-    req.pipe(request(url)).pipe(res);
+    try {
+        var url = req.url.slice(1);
+        req.pipe(request(url)).pipe(res);
+    } catch(e) {
+        res.send(200);
+    }
 });
 
 https.createServer({

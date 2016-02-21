@@ -103,9 +103,9 @@
     width: 100%;
     top: 0;
     left: 0;
-    padding-right: 80px;
+
     transition: all 0.3s ease;
-    border-right: solid 0px #333;
+    border-right: solid 80px #333;
 }
 
 .show-side .main-section {

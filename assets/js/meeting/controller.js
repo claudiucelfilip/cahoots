@@ -46,69 +46,6 @@
             });
 
 
-            // Chat Handle Events
-            $scope.messages = [];
-
-            $scope.handleCaption = function(event, data) {
-                if(data) {
-                    $scope.currentMessage = data.text;
-
-                    $timeout.cancel(timeout);
-                    timeout = $timeout(function() { $scope.currentMessage = ''; }, 1500);
-
-                    if(data.streamId) {
-                        if(data.streamId !== Video.myStream.id){
-                            Video.setMainStreamById(data.streamId);
-                        }
-
-                        // Move active class around
-                        var index = _.findIndex(Video.streams, function(item) {
-                            return item.id === data.streamId;
-                        });
-
-                        if(Video.streams[index]) {
-                            $(Video.streams[index].el).addClass('active').siblings().removeClass('active');
-                        }
-                    }
-
-                    if (!$scope.$$phase) {
-                        $scope.$digest();
-                    }
-
-                } else {
-                    $scope.currentMessage = event.text;
-
-                    $timeout.cancel(timeout);
-                    timeout = $timeout(function() { $scope.currentMessage = ''; }, 1500);
-
-                    if(event.streamId) {
-                        if(event.streamId !== Video.myStream.id){
-                            Video.setMainStreamById(event.streamId);
-                        }
-
-                        // Move active class around
-                        var index = _.findIndex(Video.streams, function(item) {
-                            return item.id === event.streamId;
-                        });
-
-                        if(Video.streams[index]) {
-                            $(Video.streams[index].el).addClass('active').siblings().removeClass('active');
-                        }
-                    }
-
-                    if (!$scope.$$phase) {
-                        $scope.$digest();
-                    }
-                }
-            };
-
-            $scope.handleMessage = function(event, data) {
-                if(data) {
-                    $scope.messages.push(data);
-                } else {
-                    $scope.messages.push(event);
-                }
-            };
 
             Pusher.on(Constants.events.message, $scope.handleMessage);
             Pusher.on(Constants.events.caption, $scope.handleCaption);

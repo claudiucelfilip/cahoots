@@ -17,7 +17,8 @@
                 caption: 'client-caption',
                 captionLocal: 'local-caption',
                 message: 'client-messageCreated',
-                shareLink: 'client-share-link'
+                shareLink: 'client-share-link',
+                changeFrameLink: 'client-change-frame-link'
             }
         })
         .config([
