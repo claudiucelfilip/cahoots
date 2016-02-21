@@ -23,8 +23,9 @@
 
     <ul class="chat-messages list-group">
         <li class="list-group-item" ng-hide="messages">No chat messages available</li>
-        <li class="list-group-item" ng-repeat="message in messages"> {{ message.streamId }}: {{ message.text }}</li>
+        <li class="list-group-item" ng-repeat="message in messages track by $index"> {{ message.streamId }}: {{ message.text }}</li>
     </ul>
+
 </div>
 <section class="video-container">
     <video id="myvideo" autoplay muted></video>

@@ -25,7 +25,7 @@
 
             var currentMessageId =  Utils.generateId();
 
-            recognizer.onresult = $.throttle(250, function (event) {
+            recognizer.onresult = $.throttle(100, function (event) {
                 var str = '';
 
 
@@ -39,18 +39,19 @@
                             text: str,
                             streamId: Video.myStream.id
                         });
+                        return;
 
                     } else {
                         str += event.results[i][0].transcript;
+
                     }
 
-
-                    DataChan.emit(Constants.events.message, {
-                        id: currentMessageId,
-                        text: str,
-                        streamId: Video.myStream.id
-                    });
                 }
+                DataChan.emit(Constants.events.message, {
+                    id: currentMessageId,
+                    text: str,
+                    streamId: Video.myStream.id
+                });
 
             });
 

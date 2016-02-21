@@ -20,6 +20,7 @@
                 function init(roomId) {
 
                     dataChannel = new DataChannel(roomId);
+                    dataChannel.userid = window.userid;
 
                     dataChannel.onerror = function (error) {
                         console.log("Data Channel Error:", error);
