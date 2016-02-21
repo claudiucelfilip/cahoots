@@ -24,6 +24,7 @@
     "recordrtc": "^5.2.7",
     "ngstorage": "^0.3.10",
     "lodash": "^4.5.0",
-    "datachannel": "*"
+    "datachannel": "*",
+    "clipboard": "^1.5.8"
   }
 }

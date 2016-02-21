@@ -1,17 +1,33 @@
 <div id="login">
     {{ error }}
-    <form name="login" novalidate>
-        <input name="userName" ng-model="userName" required placeholder="Your Name"></input>
-        <div ng-show="login.userName.$dirty && login.userName.$error.required">Tell us your name.</div>
 
-        <input name="room" ng-model="room" required placeholder="Room Name"></input>
-        <div ng-show="login.room.$dirty && login.room.$error.required">Tell us the room name.</div>
+    <!-- Login -->
+    <form ng-hide="requestUser" name="login" novalidate>
+        <div>
+            <input name="userName" ng-model="userName" required placeholder="Your Name"></input>
+            <div ng-show="login.userName.$dirty && login.userName.$error.required">Tell us your name.</div>
+        </div>
 
-        <button ng-click="createRoom()" class="chat-send btn btn-primary" ng-disabled="login.$invalid" ng-enter>Create Room</button>
+        <div ng-hide="requestUser">
+            <input name="room" ng-model="room" required placeholder="Room Name"></input>
+            <div ng-show="login.room.$dirty && login.room.$error.required">Tell us the room name.</div>
+        </div>
+
+        <button ng-click="createRoom()" class="btn btn-primary" ng-hide="requestUser" ng-disabled="login.$invalid" ng-enter>Create Room</button>
     </form>
 
-    <ul ng-show="recentRooms">
-        <li ng-repeat="room in recentRooms"><a ui-sref="meeting({ roomId: room })">{{ room }}</a></li>
+    <!-- User Request -->
+    <form ng-show="requestUser" name="requestForm" novalidate>
+        <div>
+            <input name="user" ng-model="user" required placeholder="Your Name"></input>
+            <div ng-show="requestForm.user.$dirty && requestForm.user.$error.required">Tell us your name.</div>
+        </div>
+
+        <button ng-click="joinRoom()" class="btn btn-primary" ng-disabled="requestForm.$invalid" ng-enter>Join Room</button>
+    </form>
+
+    <ul ng-show="recentRoom && !requestUser">
+        <li><a ui-sref="meeting({ roomId: recentRoom.name })">{{ recentRoom.name }}</a></li>
     </ul>
 
 </div>
