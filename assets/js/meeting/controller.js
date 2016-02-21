@@ -10,6 +10,13 @@
 
             Pusher.init(Room.getId());
 
+            // Modal
+            $scope.showModal = false;
+            $scope.toggleModal = function(){
+                $scope.showModal = !$scope.showModal;
+            };
+
+
             // Chat Handle Events
             $scope.messages = [];
 
