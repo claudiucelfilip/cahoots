@@ -14,10 +14,6 @@
             $scope.messages = [];
 
             $scope.handleCaption = function(event, data) {
-                if(typeof(data) === 'undefinded') {
-                    data = event;
-                }
-
                 if(data) {
                     $scope.currentMessage = data.text;
 
@@ -31,14 +27,28 @@
                     if (!$scope.$$phase) {
                         $scope.$digest();
                     }
+                } else {
+                    $scope.currentMessage = event.text;
+
+                    $timeout.cancel(timeout);
+                    timeout = $timeout(function() { $scope.currentMessage = ''; }, 1500);
+
+                    if(event.streamId) {
+                        Video.setMainStreamById(event.streamId);
+                    }
+
+                    if (!$scope.$$phase) {
+                        $scope.$digest();
+                    }
                 }
             };
 
             $scope.handleMessage = function(event, data) {
-                if(typeof(data) === 'undefinded') {
-                    data = event;
+                if(data) {
+                    $scope.messages.push(data);
+                } else {
+                    $scope.messages.push(event);
                 }
-                $scope.messages.push(data);
             };
 
             Pusher.on(Constants.events.message, $scope.handleMessage);
