@@ -22,8 +22,8 @@
             <li class="list-group-item" ng-hide="messages">No chat messages available</li>
             <li class="list-group-item" ng-repeat="message in messages track by $index">
                 {{ message.userName.name }}:
-                <span >en - {{ message.text }}</span><br/>
-                <span >{{currentLang.value}} - {{ message.translations[currentLang] }}</span>
+                <span ng-show="!message.translations[currentLang.value]">{{ message.text }}</span>
+                <span ng-show="message.translations[currentLang.value]">{{ message.translations[currentLang.value].text }}</span>
 
             </li>
         </ul>

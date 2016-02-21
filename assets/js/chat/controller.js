@@ -5,23 +5,23 @@
             var timeout;
             $scope.langs = [
                 {
-                    label: 'English to English',
+                    label: 'Translate to English',
                     value: 'en'
                 },
                 {
-                    label: 'English to French',
+                    label: 'Translate to French',
                     value: 'fr'
                 },
                 {
-                    label: 'English to Spanish',
+                    label: 'Translate to Spanish',
                     value: 'es'
                 },
                 {
-                    label: 'English to German',
+                    label: 'Translate to German',
                     value: 'de'
                 },
                 {
-                    label: 'English to Romanian',
+                    label: 'Translate to Romanian',
                     value: 'ro'
                 }
             ];
@@ -31,9 +31,10 @@
                 Message.lang = $scope.currentLang.value;
 
                 for (var i = 0; i < $scope.messages.length; i++) {
-                    $scope.messages[i].translate().then(function(){
+                    $scope.messages[i].translate().then(function() {
+
                         if(!$scope.$$phase) {
-                            $scope.$digest();
+                            $scope.$apply();
                         }
                     });
                 }
