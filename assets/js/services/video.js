@@ -118,8 +118,25 @@
             this.stopScreen = function() {
                 self.myStream = null;
                 skylink.stopScreen();
+            };
 
+            var streamConfig = {
+                audioMuted: false,
+                videoMuted: false
+            };
 
+            function setStream() {
+                skylink.muteStream(streamConfig);
+            }
+
+            this.toggleMuteAudio = function() {
+                streamConfig.audioMuted = !streamConfig.audioMuted;
+                setStream();
+            };
+
+            this.toggleMuteVideo = function() {
+                streamConfig.videoMuted = !streamConfig.videoMuted;
+                setStream();
             };
 
             skylink.init({

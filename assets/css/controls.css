@@ -41,3 +41,15 @@
 .controls .item.active {
     background: #33a9b8;
 }
+
+.controls .item-video-mute.active,
+.controls .item-audio-mute.active {
+    background: #ed174c;
+}
+.controls .item-share.active {
+    background: #7fba00;
+}
+
+.controls .item-endcall .icon-endcall {
+    color: #ed174c;
+}

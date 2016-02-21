@@ -137,6 +137,17 @@
                 }
             }
 
+
+            $scope.toggleMuteAudio = function(feature) {
+                Video.toggleMuteAudio();
+                $scope.toggleFeature(feature);
+            };
+
+            $scope.toggleMuteVideo = function(feature) {
+                Video.toggleMuteVideo();
+                $scope.toggleFeature(feature);
+            };
+
             $scope.isFeatureActive = function(feature) {
                 return $scope.side.activeFeatures.indexOf(feature) !== -1;
             };
