@@ -30,11 +30,10 @@
 
 </head>
 <body ng-app="cahoots" ng-class="{'show-side': side.show}">
-    <div class="tagline-container">
-        <div>
-            <span class="tagline">The tagline of tomorrow, today.</span>
-        </div>
-    </div>
+    <div id='stars'></div>
+    <div id='stars2'></div>
+    <div id='stars3'></div>
+
     <ui-view  ng-class="side.activeFeatures"></ui-view>
 
     <script src="assets/js/vendor/jquery-1.11.2.js"></script>
@@ -67,6 +66,7 @@
     <script src="assets/js/services/api.js"></script>
 
     <script src="assets/js/meeting/controller.js"></script>
+    <script src="assets/js/meeting/modal.js"></script>
     <script src="assets/js/chat/controller.js"></script>
     <script src="assets/js/login/controller.js"></script>
 </body>
