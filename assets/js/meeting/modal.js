@@ -1,19 +1,10 @@
-var mymodal = angular.module('cahoots');
-
-mymodal.controller('ModalCtrl', function ($scope) {
-    $scope.showModal = false;
-    $scope.toggleModal = function(){
-        $scope.showModal = !$scope.showModal;
-    };
-});
-
-mymodal.directive('modal', function () {
+angular.module('cahoots').directive('modal', function () {
     return {
         template: '<div class="modal fade">' +
         '<div class="modal-dialog">' +
         '<div class="modal-content">' +
         '<div class="modal-header">' +
-        '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
+        '<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-close"></i></button>' +
         '<h4 class="modal-title">{{ title }}</h4>' +
         '</div>' +
         '<div class="modal-body" ng-transclude></div>' +

@@ -25,6 +25,7 @@
     "ngstorage": "^0.3.10",
     "lodash": "^4.5.0",
     "datachannel": "*",
-    "clipboard": "^1.5.8"
+    "clipboard": "^1.5.8",
+    "angular-sanitize": "^1.5.0"
   }
 }

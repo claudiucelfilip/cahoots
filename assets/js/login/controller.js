@@ -38,7 +38,14 @@
                         $localStorage.userName = response.users[0];
                         $localStorage.recentRoom = response;
 
-                        $state.go('meeting', { roomId: response.name, justCreated: true });
+                        Api.startListener({ second: response.name },
+                            function(response) {
+                                $state.go('meeting', { roomId: response.name, justCreated: true });
+                            },
+                            function(error) {
+                                $scope.error = Error.handler(error);
+                            }
+                        );
                     },
                     function(error) {
                         $scope.error = Error.handler(error);
