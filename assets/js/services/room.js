@@ -5,7 +5,7 @@
             var roomId;
 
             this.setId = function(id) {
-                roomId = Constants.uniqueId + '-' + id;
+                roomId = id;
             };
 
             this.getId = function() {

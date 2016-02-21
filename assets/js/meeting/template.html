@@ -19,7 +19,6 @@
 
 
 <!-- Chat -->
-
 <aside class="side-section">
     <div class="chat-container">
         <div class="chat">
@@ -30,8 +29,8 @@
         <ul class="chat-messages list-group">
             <li class="list-group-item" ng-hide="messages">No chat messages available</li>
             <li class="list-group-item" ng-repeat="message in messages track by $index">
-                {{ message.streamId }}:
-                {{message.text }}
+                {{ message.userName.name }}:
+                {{ message.text }}
             </li>
         </ul>
     </div>

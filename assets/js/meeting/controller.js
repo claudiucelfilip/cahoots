@@ -2,54 +2,60 @@
     'use strict';
 
     app.controller('MeetingCtrl',
-        function ($scope, $state, $stateParams, $localStorage, Pusher, Constants, Video, Speech, Api, DataChan, Error, Utils, Room, $timeout, roomDetails) {
+        function ($scope, $state, $stateParams, $localStorage, $rootScope, Pusher, Constants, Video, Speech, Api, DataChan, Error, Utils, Room, $timeout, roomDetails) {
+
+            var timeout;
 
             Room.setId($stateParams.roomId);
 
             Pusher.init(Room.getId());
-            DataChan.init(Room.getId());
 
-
-            var timeout;
-
-            // Chat
+            // Chat Handle Events
             $scope.messages = [];
 
-            DataChan.on(Constants.events.message, function (data) {
-                var index = _.findIndex($scope.messages, function (item) {
-                    return item.id == data.id
-                });
-                if (index < 0) {
-                    $scope.messages.push(data);
-                } else {
-                    $scope.messages[index] = data;
+            $scope.handleCaption = function(event, data) {
+                if(typeof(data) === 'undefinded') {
+                    data = event;
                 }
 
-                $scope.currentMessage = data.text;
+                if(data) {
+                    $scope.currentMessage = data.text;
 
-                $timeout.cancel(timeout);
-                timeout = $timeout(function() {
-                    $scope.currentMessage = '';
-                }, 1500);
+                    $timeout.cancel(timeout);
+                    timeout = $timeout(function() { $scope.currentMessage = ''; }, 1500);
 
+                    if(data.streamId) {
+                        Video.setMainStreamById(data.streamId);
+                    }
 
-                Video.setMainStreamById(data.streamId);
-
-
-                if (!$scope.$$phase) {
-                    $scope.$digest();
+                    if (!$scope.$$phase) {
+                        $scope.$digest();
+                    }
                 }
+            };
 
-            });
+            $scope.handleMessage = function(event, data) {
+                debugger
+                if(typeof(data) === 'undefinded') {
+                    data = event;
+                }
+                $scope.messages.push(data);
+            };
 
+            Pusher.on(Constants.events.message, $scope.handleMessage);
+            Pusher.on(Constants.events.caption, $scope.handleCaption);
+            $rootScope.$on(Constants.events.captionLocal, $scope.handleCaption);
+            $rootScope.$on(Constants.events.message, $scope.handleMessage);
 
             $scope.sendMessage = function (message) {
                 var payload = {
                     id: Utils.generateId(),
                     text: message,
-                    streamId: Video.myStream.id
+                    userName: $localStorage.userName
                 };
-                DataChan.emit(Constants.events.message, payload);
+
+                Pusher.emit(Constants.events.message, payload);
+                $scope.handleMessage(payload);
             };
 
 

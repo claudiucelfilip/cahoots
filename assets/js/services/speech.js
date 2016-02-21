@@ -7,7 +7,7 @@
         window.webkitSpeechRecognition ||
         null;
 
-    app.service('Speech', function (Translation, Pusher, Constants, Video, DataChan, Utils) {
+    app.service('Speech', function ($localStorage, $rootScope, Translation, Pusher, Constants, Video, DataChan, Utils) {
 
 
         this.init = function () {
@@ -40,43 +40,28 @@
 
                     } else {
                         str += event.results[i][0].transcript;
-
                     }
-
                 }
 
                 var data = {
                     id: currentMessageId,
                     text: str,
-                    streamId: Video.myStream && Video.myStream.id
+                    streamId: Video.myStream && Video.myStream.id,
+                    userName: $localStorage.userName
                 };
 
-                //console.log(event.results.length);
-                if(!final) {
-                    DataChan.emit(Constants.events.message, data);
+                if( ! final ) {
+                    $rootScope.$emit(Constants.events.captionLocal, data);
+                    Pusher.emit(Constants.events.caption, data);
                 } else {
+                    $rootScope.$emit(Constants.events.message, data);
                     Pusher.emit(Constants.events.message, data);
                 }
 
             });
 
-
-            // Listen for errors
-            recognizer.onerror = function (event) {
-                //console.log('Recognition error: ', event);
-            };
-
-            recognizer.onsoundend = function(event) {
-                //console.log('onsoundend', event);
-            };
-            recognizer.onspeechend = function(event) {
-                //console.log('onspeechend', event);
-            };
             recognizer.onend = function(event) {
                 recognizer.start();
-            };
-            recognizer.onmatch = function(event) {
-                //console.log('onmatch', event);
             };
 
             setTimeout(function() {

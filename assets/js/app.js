@@ -13,10 +13,10 @@
                 url: 'https://cahoots-be.dev/'
             },
             events: {
-                messageCreated: 'client-messageCreated',
-                message: 'client-partial-message'
-            },
-            uniqueId: 'foo'
+                caption: 'client-caption',
+                captionLocal: 'local-caption',
+                message: 'client-messageCreated'
+            }
         })
         .config([
             '$locationProvider',
