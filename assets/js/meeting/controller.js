@@ -82,21 +82,43 @@
             };
 
             $scope.toggleScreenShare = function() {
-                if ($scope.isFeatureActive('screen-share')) {
-                    Video.shareScreen();
+                var feature = 'screen-share';
+                if (!$scope.isFeatureActive(feature)) {
+                    Video.shareScreen(function(error) {
+                        removeFeature(feature);
+                    });
+                    addFeature(feature);
                 } else {
                     Video.stopScreen();
+                    removeFeature(feature);
                 }
             };
 
-            $scope.toggleFeature = function(feature) {
+            $scope.toggleFeature = function(feature, force) {
                 var index = $scope.side.activeFeatures.indexOf(feature);
+
                 if (index === -1) {
                     $scope.side.activeFeatures.push(feature);
                 } else {
                     $scope.side.activeFeatures.splice(index, 1);
                 }
             };
+
+            function addFeature(feature) {
+                var index = $scope.side.activeFeatures.indexOf(feature);
+
+                if (index === -1) {
+                    $scope.side.activeFeatures.push(feature);
+                }
+            }
+
+            function removeFeature(feature) {
+                var index = $scope.side.activeFeatures.indexOf(feature);
+
+                if (index !== -1) {
+                    $scope.side.activeFeatures.splice(index, 1);
+                }
+            }
 
             $scope.isFeatureActive = function(feature) {
                 return $scope.side.activeFeatures.indexOf(feature) !== -1;

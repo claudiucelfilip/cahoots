@@ -38,7 +38,7 @@
 
             skylink.setDebugMode(true);
             skylink.on('peerJoined', function (peerId, peerInfo, isSelf) {
-                if (isSelf) return; // We already have a video element for our video and don't need to create a new one.
+
                 var vid = document.createElement('video');
                 vid.autoplay = true;
 
@@ -47,12 +47,19 @@
             });
 
             skylink.on('incomingStream', function (peerId, stream, isSelf) {
-                if (isSelf) return;
+
                 var vid = document.getElementById(peerId);
                 vid.setAttribute('stream-id', stream.id);
                 stream.el = vid;
                 self.streams.push(stream);
+
                 attachMediaStream(vid, stream);
+
+                if (isSelf) {
+                    self.setMainStream(stream);
+                    self.myStream = stream;
+                    vid.muted = 'muted';
+                }
             });
 
             skylink.on('peerLeft', function (peerId, peerInfo, isSelf) {
@@ -61,37 +68,14 @@
             });
 
 
-            skylink.on('mediaAccessSuccess', function (stream) {
-                var vid = document.getElementById('myvideo');
-                attachMediaStream(vid, stream);
-                vid.setAttribute('stream-id', stream.id);
-
-                stream.el = vid;
-                self.setMainStream(stream);
-                self.streams.push(stream);
-
-                self.myStream = stream;
-
-            });
-
-
-            this.shareScreen = function() {
-                skylink.shareScreen();
+            this.shareScreen = function(errorCallback) {
+                skylink.shareScreen(errorCallback);
             };
 
             this.stopScreen = function() {
                 skylink.stopScreen();
-                self.setMainStream(self.myStream);
+
             };
-
-
-            skylink.on('iceConnectionState', function (state, peerId) {
-                if (iceConnectionState === skylink.ICE_CONNECTION_STATE.FAILED) {
-                    // Do a refresh
-                    skylink.refreshConnection(peerId);
-                }
-            });
-
 
             skylink.init({
                 apiKey: 'a1a9c9c3-da9a-417c-bb2b-0ebc55b119e3',
