@@ -76,6 +76,10 @@
     <h2 id="subtitle" class="subtitle" ng-class="{'active': currentMessage.length}">
         <span class="text">{{currentMessage}}</span>
     </h2>
+    <div class="frame-container" ng-controller="FrameCrl">
+        <input type="url" ng-model="frameUrl"/>
+        <iframe src="{{frameApi}}{{frameUrl}}"></iframe>
+    </div>
 </section>
 
 
