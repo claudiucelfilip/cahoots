@@ -37,7 +37,7 @@
                 if (isSelf) return; // We already have a video element for our video and don't need to create a new one.
                 var vid = document.createElement('video');
                 vid.autoplay = true;
-                vid.muted = true; // Added to avoid feedback when testing locally
+
                 vid.id = peerId;
                 $videoContainer.append(vid);
             });
@@ -100,7 +100,7 @@
                 defaultRoom: roomId
             }, function () {
                 skylink.joinRoom({
-                    audio: true,
+                    audio: false,
                     video: true
                 });
             });

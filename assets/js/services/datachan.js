@@ -4,7 +4,7 @@
     angular
         .module('cahoots')
         .factory('DataChan',
-            function (Pusher, Constants) {
+            function (Utils) {
                 var dataChannel;
 
                 function messageHandler(data) {
@@ -20,7 +20,8 @@
                 function init(roomId) {
 
                     dataChannel = new DataChannel(roomId);
-                    dataChannel.userid = window.userid;
+                    dataChannel.userid = Utils.generateId();
+                    console.log(dataChannel.userid);
 
                     dataChannel.onerror = function (error) {
                         console.log("Data Channel Error:", error);
