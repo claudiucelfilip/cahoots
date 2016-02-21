@@ -11,13 +11,27 @@
         this.streams = [];
         this.myStream = null;
 
-        this.setMainStream = $.throttle(2000, function(stream) {
-            attachMediaStream(mainVideo, stream);
 
-            $(stream.el).addClass('active').siblings().remove('active');
+        $videoContainer.on('click', 'video', function() {
+            var $this = $(this);
+            self.setMainStreamById($this.attr('stream-id'), true);
         });
 
-        this.setMainStreamById = function(streamId) {
+        var needsForce = false;
+        this.setMainStream = $.throttle(2000, function(stream, forced) {
+
+            if (forced) {
+                needsForce = true;
+            }
+
+            if ((needsForce && forced) || !needsForce) {
+                attachMediaStream(mainVideo, stream);
+                $(stream.el).addClass('active').siblings().removeClass('active');
+            }
+
+        });
+
+        this.setMainStreamById = function(streamId, forced) {
             if (currentMainStreamId === streamId) {
                 return;
             }
@@ -28,7 +42,7 @@
 
             if (index !== -1) {
                 currentMainStreamId =  streamId;
-                self.setMainStream(self.streams[index]);
+                self.setMainStream(self.streams[index], forced);
 
             }
         };
@@ -110,8 +124,7 @@
 
             skylink.init({
                 apiKey: 'a1a9c9c3-da9a-417c-bb2b-0ebc55b119e3',
-                defaultRoom: roomId,
-                enableDataChannel: false
+                defaultRoom: roomId
             }, function () {
                 skylink.joinRoom({
                     audio: true,

@@ -35,7 +35,6 @@
             };
 
             $scope.handleMessage = function(event, data) {
-                debugger
                 if(typeof(data) === 'undefinded') {
                     data = event;
                 }
