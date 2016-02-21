@@ -3,6 +3,7 @@
 
     app.controller('MeetingCtrl',
         function ($scope, $state, $stateParams, $localStorage, Pusher, Constants, Video, Speech, Api, DataChan, Error, Utils, Room, $timeout, roomDetails) {
+
             Room.setId($stateParams.roomId);
 
             Pusher.init(Room.getId());
@@ -10,6 +11,7 @@
 
 
             var timeout;
+
             // Chat
             $scope.messages = [];
 
