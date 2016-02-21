@@ -5,16 +5,19 @@
         </div>
         <div class="row">
             <div class="left col-lg-4 hidden-sm hidden-xs col-md-4">
-                <h3 class="subtitle">
-                    <span class="text">Comment allez-vous aujourd'hui?</span>
-                </h3>
+                <div class="subtitle-limiter">
+                    <h3 class="subtitle">
+                        <span class="text">Comment allez-vous aujourd'hui?</span>
+                    </h3>
+                </div>
             </div>
             <div class="center  col-lg-4 col-md-4 col-sm-8 col-xs-10">
                 <!-- Login -->
                 <form ng-hide="requestUser" name="login" novalidate>
                     <div class="white-back">
                         <div>
-                            <input name="userName" ng-model="userName" required placeholder="Your Name" autocomplete="off" />
+                            <input name="userName" ng-model="userName" required placeholder="Your Name"
+                                   autocomplete="off"/>
                             <div class="msg" ng-show="login.userName.$dirty && login.userName.$error.required">Tell us
                                 your name.
                             </div>
@@ -22,7 +25,7 @@
 
                         <div>
                             <input name="room" class="input-primary" ng-model="room" required
-                                   placeholder="Room Name" autocomplete="off"  ng-class="{error: error}"/>
+                                   placeholder="Room Name" autocomplete="off" ng-class="{error: error}"/>
                             <div class="msg" ng-show="login.room.$dirty && login.room.$error.required">Tell us the room
                                 name.
                             </div>
@@ -33,7 +36,8 @@
                         </div>
 
                         <ul class="history" ng-show="recentRoom && !requestUser">
-                            <li><a ui-sref="meeting({ roomId: recentRoom.name })"><i class="icon-history"></i>{{ recentRoom.name }}</a></li>
+                            <li><a ui-sref="meeting({ roomId: recentRoom.name })"><i class="icon-history"></i>{{
+                                recentRoom.name }}</a></li>
                         </ul>
                     </div>
 
@@ -50,7 +54,11 @@
                 <!-- User Request -->
                 <form ng-show="requestUser" name="requestForm" novalidate>
                     <div class="white-back">
-                        <input name="user" ng-model="user" required placeholder="Your Name" autocomplete="off" ng-class="{error: error}"/>
+                        <h3 class="title">Joining "{{room}}" ?</h3>
+                        <input name="room" ng-model="user" class="input-primary" required placeholder="Your Name"
+                               autocomplete="off" ng-class="{error: error}"/>
+
+
                         <div class="msg" ng-if="requestForm.user.$dirty && requestForm.user.$error.required">
                             Tell us your name.
                         </div>
@@ -74,9 +82,11 @@
 
             </div>
             <div class="right col-lg-4 hidden-sm hidden-xs col-md-4">
-                <h3 class="subtitle">
-                    <span class="text">I'm fine, thank you for asking.</span>
-                </h3>
+                <div class="subtitle-limiter">
+                    <h3 class="subtitle">
+                        <span class="text">I'm fine, thank you for asking.</span>
+                    </h3>
+                </div>
             </div>
 
         </div>

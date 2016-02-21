@@ -24,6 +24,10 @@
 .controls .item-lock {
     margin-bottom: 40px;
 }
+.controls .item-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}
 .controls .item-lock:after {
     content: '';
     display: inline-block;

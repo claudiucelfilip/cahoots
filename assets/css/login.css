@@ -54,6 +54,12 @@ body input {
     padding: 10px 5px;
     max-width: 350px;
     margin: 0 auto;
+    color: #3a3e3f;
+}
+.login-container .title {
+    padding: 0 20px 10px;
+    font-size: 20px;
+    text-align: center;
 }
 @media (max-width: 992px) {
     .login-container .center {
@@ -91,7 +97,7 @@ body input {
     box-sizing: content-box;
     padding: 15px 30px;
     margin-left: -30px;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     transform: translateY(0) scale(0.98);
     transform-origin: 50% 50%;
     transition: all 0.3s ease;
@@ -120,7 +126,7 @@ body input {
 }
 .login-container .input-primary:hover, .login-container .input-primary:focus {
     transform: translateY(-1px) scale(1);
-    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.30);
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.25) !important;
 
 }
 
@@ -153,6 +159,7 @@ body input {
     text-decoration: none !important;
     transition: all 0.3s ease;
     display: block;
+    margin-top: 10px;
 }
 .login-container .history a:hover {
     opacity: 1;
@@ -162,4 +169,12 @@ body input {
     font-size: 18px;
     vertical-align: middle;
     margin-right: 10px;
+    color: #33a9b8;
+}
+
+.subtitle-limiter {
+    max-width: 240px;
+}
+.left .subtitle-limiter {
+    margin-left: auto;
 }
