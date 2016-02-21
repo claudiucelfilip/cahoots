@@ -1,6 +1,9 @@
 .chat-container {
     position: relative;
     padding: 15px 25px;
+    font-size:14px;
+    color:#3a3e3f;
+    text-align:left;
 }
 .show-chat .chat-container {
     transform: translateX(-100%);

@@ -21,7 +21,18 @@
 <!-- Chat -->
 
 <aside class="side-section">
-    <div class="chat-container">
+    <div class="chat-container" ng-controller="ChatCtrl">
+        <!-- Single button -->
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                {{currentLang.label}} <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li ng-repeat="lang in langs"><a href="#" ng-click="setLang(lang.value)">lang.label</a></li>
+            </ul>
+        </div>
+
         <div class="chat">
             <input name="message" ng-model="message" class=" orm-control" placeholder="Message"></input>
             <button ng-click="sendMessage(message)" class="chat-send btn btn-primary">Send</button>
@@ -38,8 +49,6 @@
 
     <nav class="controls">
         <a class="item" href="" ng-click="toggleScreenShare()" ng-class="{'active': isFeatureActive('screen-share')}">Share Screen</a>
-        <a class="item" href="" id="record" ng-disabled="recording" ng-click="startRecording()">Record</a>
-        <a class="item" href="" id="stop" ng-click="stopRecording()">Stop Record</a>
         <a class="item" href="" ng-click="toggleSide('chat')" ng-class="{'active': isFeatureActive('chat')}">Chat</a>
     </nav>
 

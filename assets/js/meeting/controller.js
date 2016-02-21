@@ -16,6 +16,7 @@
             $scope.messages = [];
 
             DataChan.on(Constants.events.message, function (data) {
+
                 var index = _.findIndex($scope.messages, function (item) {
                     return item.id == data.id
                 });

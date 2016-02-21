@@ -57,6 +57,7 @@
                 } else {
                     Pusher.emit(Constants.events.message, data);
                 }
+                console.log(str);
 
             });
 
