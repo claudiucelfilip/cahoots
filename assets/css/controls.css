@@ -1,0 +1,27 @@
+.controls {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80px;
+    background: #3a3e3f;
+    color: #fff;
+    height: 100%;
+}
+
+.controls .item {
+    display: block;
+    height: 80px;
+    color: #fff;
+    padding: 10px;
+    transition: all 0.3s ease;
+    text-decoration: none !important;
+}
+
+.controls .item:hover, .controls .item:active {
+
+    background: #222525;
+}
+
+.controls .item.active {
+    background: #33a9b8;
+}

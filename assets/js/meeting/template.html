@@ -2,37 +2,57 @@
 
 <!-- User request -->
 <div ng-show="requestUser">
-        {{ requestUserError }}
-        <form name="request" novalidate>
-            <input name="userName" ng-model="userName" required placeholder="Your Name"></input>
-            <div ng-show="request.userName.$dirty && request.userName.$error.required">Tell us your name, please.</div>
+    {{ requestUserError }}
+    <form name="request" novalidate>
+        <input name="userName" ng-model="userName" required placeholder="Your Name"></input>
+        <div ng-show="request.userName.$dirty && request.userName.$error.required">Tell us your name, please.</div>
 
-            <button ng-click="createRoom(userName)" ng-show="needToCreateRoom" class="btn btn-primary" ng-disabled="request.$invalid" ng-enter>Create Room</button>
-            <button ng-click="joinRoom(userName)" ng-hide="needToCreateRoom" class="btn btn-primary" ng-disabled="request.$invalid" ng-enter>Join Room</button>
-        </form>
-    </div>
+        <button ng-click="createRoom(userName)" ng-show="needToCreateRoom" class="btn btn-primary"
+                ng-disabled="request.$invalid" ng-enter>Create Room
+        </button>
+        <button ng-click="joinRoom(userName)" ng-hide="needToCreateRoom" class="btn btn-primary"
+                ng-disabled="request.$invalid" ng-enter>Join Room
+        </button>
+    </form>
+</div>
 </div>
 
 
 <!-- Chat -->
-<div class="chat">
-    <div class="chat-input">
-        <input name="message" ng-model="message" class=" orm-control" placeholder="Message"></input>
-        <button ng-click="sendMessage(message)" class="chat-send btn btn-primary">Send</button>
+
+<aside class="side-section">
+    <div class="chat-container">
+        <div class="chat">
+            <input name="message" ng-model="message" class=" orm-control" placeholder="Message"></input>
+            <button ng-click="sendMessage(message)" class="chat-send btn btn-primary">Send</button>
+        </div>
+
+        <ul class="chat-messages list-group">
+            <li class="list-group-item" ng-hide="messages">No chat messages available</li>
+            <li class="list-group-item" ng-repeat="message in messages track by $index">
+                {{ message.streamId }}:
+                {{message.text }}
+            </li>
+        </ul>
     </div>
 
-    <ul class="chat-messages list-group">
-        <li class="list-group-item" ng-hide="messages">No chat messages available</li>
-        <li class="list-group-item" ng-repeat="message in messages track by $index"> {{ message.streamId }}: {{ message.text }}</li>
-    </ul>
+    <nav class="controls">
+        <a class="item" href="" ng-click="toggleFeature('screen-share'); toggleScreenShare()" ng-class="{'active': isFeatureActive('screen-share')}">Share Screen</a>
+        <a class="item" href="" id="record" ng-disabled="recording" ng-click="startRecording()">Record</a>
+        <a class="item" href="" id="stop" ng-click="stopRecording()">Stop Record</a>
+        <a class="item" href="" ng-click="toggleSide('chat')" ng-class="{'active': isFeatureActive('chat')}">Chat</a>
+    </nav>
 
-</div>
-<section class="video-container">
-    <video id="myvideo" autoplay muted></video>
+</aside>
+
+<section class="main-section">
+    <div class="video-container">
+        <video id="myvideo" autoplay muted></video>
+    </div>
+    <video id="mainVideo" autoplay muted></video>
+    <h2 id="subtitle" class="subtitle" ng-class="{'active': currentMessage.length}">
+        <span class="text">{{currentMessage}}</span>
+    </h2>
 </section>
-<!--<video id="mainVideo" ng-class="{recording: recording}" autoplay muted></video>-->
 
-<h2 id="subtitle">{{currentMessage}}</h2>
-<button id="share">Share Screen</button>
-<button id="record" ng-disabled="recording" ng-click="startRecording()">Record</button>
-<button id="stop" ng-click="stopRecording()">Stop Record</button>
+

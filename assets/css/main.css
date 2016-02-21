@@ -3,21 +3,24 @@
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Roboto', sans-serif;
+    background: #3a3e3f;
+    min-height: 100%;
+}
 
 #subtitle.final {
     background: #ddeeff;
 }
 
-.video-container {
-    display: table;
-    width: 200px;
-
-}
-.video-container video {
-    width: 100%;
-}
-
-#myvideo {
-    transform: rotateY(-180deg);
+.subtitle {
+    font-family: Roboto;
+    display: inline-block;
+    background: rgba(0,0,0,0.7);
+    color:#ffffff;
+    font-size: 26px;
+    line-height: 1.3;
 }

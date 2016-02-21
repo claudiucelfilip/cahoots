@@ -63,20 +63,20 @@
 
             // Listen for errors
             recognizer.onerror = function (event) {
-                console.log('Recognition error: ', event);
+                //console.log('Recognition error: ', event);
             };
 
             recognizer.onsoundend = function(event) {
-                console.log('onsoundend', event);
+                //console.log('onsoundend', event);
             };
             recognizer.onspeechend = function(event) {
-                console.log('onspeechend', event);
+                //console.log('onspeechend', event);
             };
             recognizer.onend = function(event) {
                 recognizer.start();
             };
             recognizer.onmatch = function(event) {
-                console.log('onmatch', event);
+                //console.log('onmatch', event);
             };
 
             setTimeout(function() {

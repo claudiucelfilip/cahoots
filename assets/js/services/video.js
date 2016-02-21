@@ -11,9 +11,11 @@
         this.streams = [];
         this.myStream = null;
 
-        this.setMainStream = function(stream) {
+        this.setMainStream = $.throttle(2000, function(stream) {
             attachMediaStream(mainVideo, stream);
-        };
+
+            $(stream.el).addClass('active').siblings().remove('active');
+        });
 
         this.setMainStreamById = function(streamId) {
             if (currentMainStreamId === streamId) {
@@ -27,12 +29,14 @@
             if (index !== -1) {
                 currentMainStreamId =  streamId;
                 self.setMainStream(self.streams[index]);
+
             }
         };
         this.init = function (roomId) {
-            skylink = new Skylink();
+            skylink = window.skylink = new Skylink();
 
 
+            skylink.setDebugMode(true);
             skylink.on('peerJoined', function (peerId, peerInfo, isSelf) {
                 if (isSelf) return; // We already have a video element for our video and don't need to create a new one.
                 var vid = document.createElement('video');
@@ -46,6 +50,7 @@
                 if (isSelf) return;
                 var vid = document.getElementById(peerId);
                 vid.setAttribute('stream-id', stream.id);
+                stream.el = vid;
                 self.streams.push(stream);
                 attachMediaStream(vid, stream);
             });
@@ -59,9 +64,10 @@
             skylink.on('mediaAccessSuccess', function (stream) {
                 var vid = document.getElementById('myvideo');
                 attachMediaStream(vid, stream);
-                //self.setMainStream(stream);
-
                 vid.setAttribute('stream-id', stream.id);
+
+                stream.el = vid;
+                self.setMainStream(stream);
                 self.streams.push(stream);
 
                 self.myStream = stream;
@@ -69,38 +75,23 @@
             });
 
 
-            this.startRecording = function() {
-                recordRTC = new RecordRTC(self.myStream, {
-                    type: 'video'
-                });
+            this.shareScreen = function() {
+                skylink.shareScreen();
             };
-            this.stopRecording = function() {
-                recordRTC.stopRecording(function(url) {
-                    var formData = new FormData();
-                    formData.append('edition[video]', recordRTC.getBlob());
 
-                    $.ajax({
-                        type: 'POST',
-                        url: '/record',
-                        data: formData,
-                        contentType: false,
-                        cache: false,
-                        processData: false
-                    });
-                });
+            this.stopScreen = function() {
+                skylink.stopScreen();
+                self.setMainStream(self.myStream);
             };
 
 
-            $('#share').on('click', function () {
-                skylink.shareScreen(true);
-            });
 
             skylink.init({
                 apiKey: 'a1a9c9c3-da9a-417c-bb2b-0ebc55b119e3',
                 defaultRoom: roomId
             }, function () {
                 skylink.joinRoom({
-                    audio: false,
+                    audio: true,
                     video: true
                 });
             });

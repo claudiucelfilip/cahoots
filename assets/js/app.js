@@ -41,4 +41,10 @@
                 $urlRouterProvider.otherwise('/login');
             }
         ])
+        .run(function($rootScope) {
+            $rootScope.side = {
+                show: false,
+                activeFeatures: []
+            };
+        })
 }());
