@@ -109,7 +109,7 @@ body input {
     padding: 0;
     opacity: 1;
     transition: all 0.3s ease;
-    top: -32px;
+    top: -24px;
     font-size: 11px;
 }
 .login-container .input-primary ~ .msg .msg-icon {

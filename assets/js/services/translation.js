@@ -17,11 +17,11 @@
         }
 
 
-        function translate(text, target) {
+        function translate(text, lang) {
             return ajax(url, {
                 key: apiKey,
                 text: text,
-                lang: 'ro'
+                lang: lang
             });
         }
 
