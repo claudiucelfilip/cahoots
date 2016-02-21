@@ -9,6 +9,7 @@
             DataChan.init(Room.getId());
 
 
+            var timeout;
             // Chat
             $scope.messages = [];
 

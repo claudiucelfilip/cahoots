@@ -85,6 +85,13 @@
             };
 
 
+            skylink.on('iceConnectionState', function (state, peerId) {
+                if (iceConnectionState === skylink.ICE_CONNECTION_STATE.FAILED) {
+                    // Do a refresh
+                    skylink.refreshConnection(peerId);
+                }
+            });
+
 
             skylink.init({
                 apiKey: 'a1a9c9c3-da9a-417c-bb2b-0ebc55b119e3',
