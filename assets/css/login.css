@@ -45,7 +45,7 @@ body input {
     display: block;
     width: 128px;
     height: 45px;
-    margin: 20px auto;
+    margin: 20px auto 40px;
 }
 .login-container .white-back {
     background:#ffffff;

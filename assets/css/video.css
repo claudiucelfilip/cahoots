@@ -37,9 +37,9 @@
 }
 .main-section .subtitle {
     position: absolute;
-    top: 100%;
+    bottom: 30px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateY(100%);
     opacity: 0;
     font-size:30px;
     max-width: 70%;
@@ -53,6 +53,6 @@
 
 .main-section .subtitle.active {
     opacity: 1;
-    transform: translateX(-50%) translateY(-200%);
+    transform: translateX(-50%) translateY(0);
     transition: transform 0.6s ease, opacity 0.15s ease;
 }
