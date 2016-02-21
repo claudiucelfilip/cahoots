@@ -1,33 +1,78 @@
-<div id="login">
+<section id="login" class="login-container">
+    <div class="form-container container-fluid">
+        <div class="row">
+            <div class="logo"></div>
+        </div>
+        <div class="row">
+            <div class="left col-lg-4 hidden-sm hidden-xs col-md-4">
+                <h3 class="subtitle">
+                    <span class="text">Comment allez-vous aujourd'hui?</span>
+                </h3>
+            </div>
+            <div class="center  col-lg-4 col-md-4 col-sm-8 col-xs-10">
+                <!-- Login -->
+                <form ng-hide="requestUser" name="login" novalidate>
+                    <div class="white-back">
+                        <div>
+                            <input name="userName" ng-model="userName" required placeholder="Your Name" autocomplete="off" />
+                            <div class="msg" ng-show="login.userName.$dirty && login.userName.$error.required">Tell us
+                                your name.
+                            </div>
+                        </div>
+
+                        <div>
+                            <input name="room" class="input-primary" ng-model="room" required
+                                   placeholder="Room Name" autocomplete="off" />
+                            <div class="msg" ng-show="login.room.$dirty && login.room.$error.required">Tell us the room
+                                name.
+                            </div>
+                        </div>
+
+                        <ul class="history" ng-show="recentRoom && !requestUser">
+                            <li><a ui-sref="meeting({ roomId: recentRoom.name })">{{ recentRoom.name }}</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="btn-wrapper">
+
+                        <button ng-click="createRoom()" class="btn btn-hollow btn-primary" ng-hide="requestUser"
+                                ng-disabled="login.$invalid" ng-enter>Create Room
+                        </button>
+                    </div>
+
+
+                </form>
+
+                <!-- User Request -->
+                <form ng-show="requestUser" name="requestForm" novalidate>
+                    <div class="white-back">
+                        <input name="user" ng-model="user" required placeholder="Your Name" autocomplete="off" />
+                        <div class="msg" ng-show="requestForm.user.$dirty && requestForm.user.$error.required">Tell us
+                            your name.
+                        </div>
+                    </div>
+                    <div class="btn-wrapper">
+
+                        <button ng-click="joinRoom()" class="btn btn-hollow btn-primary"
+                                ng-disabled="requestForm.$invalid"
+                                ng-enter>
+                            Join Room
+                        </button>
+                    </div>
+
+                </form>
+
+
+            </div>
+            <div class="right col-lg-4 hidden-sm hidden-xs col-md-4">
+                <h3 class="subtitle">
+                    <span class="text">I'm fine, thank you for asking.</span>
+                </h3>
+            </div>
+
+        </div>
+
+    </div>
     {{ error }}
 
-    <!-- Login -->
-    <form ng-hide="requestUser" name="login" novalidate>
-        <div>
-            <input name="userName" ng-model="userName" required placeholder="Your Name"></input>
-            <div ng-show="login.userName.$dirty && login.userName.$error.required">Tell us your name.</div>
-        </div>
-
-        <div>
-            <input name="room" ng-model="room" required placeholder="Room Name"></input>
-            <div ng-show="login.room.$dirty && login.room.$error.required">Tell us the room name.</div>
-        </div>
-
-        <button ng-click="createRoom()" class="btn btn-primary" ng-hide="requestUser" ng-disabled="login.$invalid" ng-enter>Create Room</button>
-    </form>
-
-    <!-- User Request -->
-    <form ng-show="requestUser" name="requestForm" novalidate>
-        <div>
-            <input name="user" ng-model="user" required placeholder="Your Name"></input>
-            <div ng-show="requestForm.user.$dirty && requestForm.user.$error.required">Tell us your name.</div>
-        </div>
-
-        <button ng-click="joinRoom()" class="btn btn-primary" ng-disabled="requestForm.$invalid" ng-enter>Join Room</button>
-    </form>
-
-    <ul ng-show="recentRoom && !requestUser">
-        <li><a ui-sref="meeting({ roomId: recentRoom.name })">{{ recentRoom.name }}</a></li>
-    </ul>
-
-</div>
+</section>

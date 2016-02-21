@@ -19,8 +19,8 @@
 
 .video-container {
     position: relative;
-    width: 200px;
-    margin: 10px;
+    width: 120px;
+    margin: 5px 10px;
     z-index: 1;
 }
 .video-container video {

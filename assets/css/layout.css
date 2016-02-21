@@ -17,9 +17,16 @@
     transform: translateX(-100%);
 }
 .main-section {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
     padding-right: 80px;
+    transition: all 0.3s ease;
+    border-right: solid 0px #333;
 }
 
 .show-side .main-section {
-    padding-right: 410px;
+    border-right: solid 410px #333;
 }
