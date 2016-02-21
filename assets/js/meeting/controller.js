@@ -21,12 +21,24 @@
                     timeout = $timeout(function() { $scope.currentMessage = ''; }, 1500);
 
                     if(data.streamId) {
-                        Video.setMainStreamById(data.streamId);
+                        if(data.streamId !== Video.myStream.id){
+                            Video.setMainStreamById(data.streamId);
+                        }
+
+                        // Move active class around
+                        var index = _.findIndex(Video.streams, function(item) {
+                            return item.id === data.streamId;
+                        });
+
+                        if(Video.streams[index]) {
+                            $(Video.streams[index].el).addClass('active').siblings().removeClass('active');
+                        }
                     }
 
                     if (!$scope.$$phase) {
                         $scope.$digest();
                     }
+
                 } else {
                     $scope.currentMessage = event.text;
 
@@ -34,7 +46,18 @@
                     timeout = $timeout(function() { $scope.currentMessage = ''; }, 1500);
 
                     if(event.streamId) {
-                        Video.setMainStreamById(event.streamId);
+                        if(event.streamId !== Video.myStream.id){
+                            Video.setMainStreamById(event.streamId);
+                        }
+
+                        // Move active class around
+                        var index = _.findIndex(Video.streams, function(item) {
+                            return item.id === event.streamId;
+                        });
+
+                        if(Video.streams[index]) {
+                            $(Video.streams[index].el).addClass('active').siblings().removeClass('active');
+                        }
                     }
 
                     if (!$scope.$$phase) {
