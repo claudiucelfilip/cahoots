@@ -16,6 +16,15 @@
                         isArray: false,
                         cache: false
                     },
+                    getActivity: {
+                        method: 'GET',
+                        params: {
+                            first: 'rooms',
+                            third: 'activity'
+                        },
+                        isArray: true,
+                        cached: true
+                    },
                     startListener: {
                         method: 'POST',
                         params: {

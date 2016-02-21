@@ -44,17 +44,19 @@
                 }
 
                 var data = {
+                    type: Constants.types.message,
                     id: currentMessageId,
                     text: str,
                     streamId: Video.myStream && Video.myStream.id,
-                    userName: $localStorage.userName
+                    userName: $localStorage.userName,
+                    created: new Date()
                 };
 
                 if( ! final ) {
                     $rootScope.$emit(Constants.events.captionLocal, data);
                     Pusher.emit(Constants.events.caption, data);
                 } else {
-                    $rootScope.$emit(Constants.events.message, data);
+                    $rootScope.$emit(Constants.events.messageLocal, data);
                     Pusher.emit(Constants.events.message, data);
                 }
             });

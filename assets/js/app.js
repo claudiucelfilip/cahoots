@@ -16,9 +16,14 @@
             events: {
                 caption: 'client-caption',
                 captionLocal: 'local-caption',
-                message: 'client-messageCreated',
+                message: 'client-message',
                 shareLink: 'client-share-link',
-                changeFrameLink: 'client-change-frame-link'
+                changeFrameLink: 'client-change-frame-link',
+                messageLocal: 'client-messageLocal',
+                serverActivityEvent: 'client-activity-event',
+            },
+            types: {
+                message: 'message'
             }
         })
         .config([
@@ -121,7 +126,7 @@
                                                         $localStorage.recentRoom = response;
 
                                                         Api.startListener({ second: response.name },
-                                                            function(response) {
+                                                            function(notUsed) {
                                                                 $state.go('meeting', { roomId: response.name, justCreated: true });
                                                             },
                                                             function(error) {

@@ -4,9 +4,6 @@
     app.controller('MeetingCtrl',
         function ($scope, $state, $stateParams, $localStorage, $rootScope, Pusher, Constants, Video, Speech, Api, DataChan, Error, Utils, Room, $timeout, $sce, roomDetails) {
 
-            var timeout;
-            console.log('a')
-
             $scope.trustSrc = function(src) {
                 return $sce.trustAsResourceUrl(src);
             };
@@ -46,24 +43,6 @@
             });
 
 
-
-            Pusher.on(Constants.events.message, $scope.handleMessage);
-            Pusher.on(Constants.events.caption, $scope.handleCaption);
-            $rootScope.$on(Constants.events.captionLocal, $scope.handleCaption);
-            $rootScope.$on(Constants.events.message, $scope.handleMessage);
-
-            $scope.sendMessage = function (message) {
-                var payload = {
-                    id: Utils.generateId(),
-                    text: message,
-                    userName: $localStorage.userName
-                };
-
-                Pusher.emit(Constants.events.message, payload);
-                $scope.handleMessage(payload);
-            };
-
-
             // Video
             Video.init(Room.getId());
 
@@ -82,8 +61,7 @@
             // Speech
             Speech.init();
 
-            // Translations
-
+            // Actions
             $scope.toggleSide = function(feature, force) {
                 if (typeof force !== 'undefined') {
                     $scope.side.show = force;

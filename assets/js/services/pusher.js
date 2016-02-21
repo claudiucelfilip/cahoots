@@ -10,6 +10,7 @@
                 var pusher;
                 var roomId;
                 var channel;
+                var channelServer;
 
                 // Enable pusher logging - don't include this in production
                 //Pusher.log = function(message) {
@@ -44,6 +45,7 @@
                 function init(id) {
                     roomId = id;
                     channel = pusher.subscribe('private-room-' + roomId);
+                    channelServer = pusher.subscribe('private-room-' + roomId + '-server');
                 }
 
                 function getRoomId() {
@@ -54,9 +56,13 @@
                     channel.bind(event, callback);
                 }
 
-
                 function emit(event, payload) {
                     channel.trigger(event, payload);
+                    return payload;
+                }
+
+                function emitServer(event, payload) {
+                    channelServer.trigger(event, payload);
                     return payload;
                 }
 
@@ -64,6 +70,7 @@
                     init: init,
                     getRoomId: getRoomId,
                     emit: emit,
+                    emitServer: emitServer,
                     on: on,
                     pusher: pusher
                 };
