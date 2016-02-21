@@ -37,7 +37,8 @@ input:active,
 select:active,
 textarea:active,
 button:active{
-    outline: none;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .btn.btn-hollow {
@@ -51,7 +52,8 @@ button:active{
     display: inline-block;
     transform: translateY(0) scale(0.98);
     transition: all 0.3s ease;
-    opacity: 0.8;
+    opacity: 0.85;
+    font-weight: 700;
 }
 .btn.btn-hollow[disabled] {
     opacity: 0.2;

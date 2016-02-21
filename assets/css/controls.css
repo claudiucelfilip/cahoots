@@ -15,6 +15,22 @@
     padding: 10px;
     transition: all 0.3s ease;
     text-decoration: none !important;
+    text-align: center;
+}
+.controls .item i {
+    font-size: 28px;
+    line-height: 2;
+}
+.controls .item-lock {
+    margin-bottom: 40px;
+}
+.controls .item-lock:after {
+    content: '';
+    display: inline-block;
+    width: 80%;
+    height: 2px;
+    background: #484848;
+    margin-bottom: -2px;
 }
 
 .controls .item:hover, .controls .item:active {
@@ -24,4 +40,16 @@
 
 .controls .item.active {
     background: #33a9b8;
+}
+
+.controls .item-video-mute.active,
+.controls .item-audio-mute.active {
+    background: #ed174c;
+}
+.controls .item-share.active {
+    background: #7fba00;
+}
+
+.controls .item-endcall .icon-endcall {
+    color: #ed174c;
 }

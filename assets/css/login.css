@@ -45,7 +45,7 @@ body input {
     display: block;
     width: 128px;
     height: 45px;
-    margin: 20px auto;
+    margin: 20px auto 40px;
 }
 .login-container .white-back {
     background:#ffffff;
@@ -95,16 +95,33 @@ body input {
     transform: translateY(0) scale(0.98);
     transform-origin: 50% 50%;
     transition: all 0.3s ease;
+    font-size: 16px;
 }
 .login-container .input-primary ~ .msg {
+    position: relative;
     color: #fff;
     padding: 0;
-    opacity: 0.4;
+    opacity: 1;
     transition: all 0.3s ease;
+    top: -32px;
+    font-size: 11px;
+}
+.login-container .input-primary ~ .msg .msg-icon {
+    position: absolute;
+    pointer-events: none;
+    opacity: 1;
+    right: 0;
+    top: -22px;
+    font-size: 18px;
+}
+.login-container .input-primary.error {
+    background: #ed174c;
+
 }
 .login-container .input-primary:hover, .login-container .input-primary:focus {
     transform: translateY(-1px) scale(1);
     box-shadow: 0 3px 4px 0 rgba(0,0,0,0.30);
+
 }
 
 .login-container .input-primary:hover ~ .msg, .login-container .input-primary:focus ~ .msg {
@@ -128,4 +145,21 @@ body input {
 
     padding: 0px 20px 0;
     list-style: none;
+}
+
+.login-container .history a {
+    color: #333;
+    opacity: 0.6;
+    text-decoration: none !important;
+    transition: all 0.3s ease;
+    display: block;
+}
+.login-container .history a:hover {
+    opacity: 1;
+}
+
+.login-container .history .icon-history {
+    font-size: 18px;
+    vertical-align: middle;
+    margin-right: 10px;
 }

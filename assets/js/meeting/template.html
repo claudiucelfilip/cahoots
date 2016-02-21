@@ -1,23 +1,5 @@
 <div ng-show="error">{{ error }}</div>
 
-<!-- User request -->
-<div ng-show="requestUser">
-    {{ requestUserError }}
-    <form name="request" novalidate>
-        <input name="userName" ng-model="userName" required placeholder="Your Name"></input>
-        <div ng-show="request.userName.$dirty && request.userName.$error.required">Tell us your name, please.</div>
-
-        <button ng-click="createRoom(userName)" ng-show="needToCreateRoom" class="btn btn-primary"
-                ng-disabled="request.$invalid" ng-enter>Create Room
-        </button>
-        <button ng-click="joinRoom(userName)" ng-hide="needToCreateRoom" class="btn btn-primary"
-                ng-disabled="request.$invalid" ng-enter>Join Room
-        </button>
-    </form>
-</div>
-</div>
-
-
 <!-- Chat -->
 <aside class="side-section">
     <div class="chat-container" ng-controller="ChatCtrl">
@@ -46,8 +28,28 @@
     </div>
 
     <nav class="controls">
-        <a class="item" href="" ng-click="toggleScreenShare()" ng-class="{'active': isFeatureActive('screen-share')}">Share Screen</a>
-        <a class="item" href="" ng-click="toggleSide('chat')" ng-class="{'active': isFeatureActive('chat')}">Chat</a>
+        <a class="item item-lock" href="" ng-click="toggleLock()">
+            <i class="icon-unlocked"></i>
+
+        </a>
+        <a class="item" href="" ng-click="">
+            <i class="icon-invite"></i>
+        </a>
+        <a class="item item-video-mute" href="" ng-click="toggleMuteVideo('video-mute')" ng-class="{'active': isFeatureActive('video-mute')}">
+            <i class="icon-video-off"></i>
+        </a>
+        <a class="item item-audio-mute" href="" ng-click="toggleMuteAudio('audio-mute')" ng-class="{'active': isFeatureActive('audio-mute')}">
+            <i class="icon-mute"></i>
+        </a>
+        <a class="item item-share" href="" ng-click="toggleScreenShare()" ng-class="{'active': isFeatureActive('screen-share')}">
+            <i class="icon-share"></i>
+        </a>
+        <a class="item" href="" ng-click="toggleSide('chat')" ng-class="{'active': isFeatureActive('chat')}">
+            <i class="icon-chat"></i>
+        </a>
+        <a class="item item-endcall" ui-sref="login">
+            <i class="icon-endcall"></i>
+        </a>
     </nav>
 
 </aside>
