@@ -24,7 +24,6 @@
         <!-- Single button -->
         <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
                 {{currentLang.label}} <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
@@ -33,7 +32,7 @@
         </div>
 
         <div class="chat">
-            <input name="message" ng-model="message" class=" orm-control" placeholder="Message"></input>
+            <input name="message" ng-model="message" class=" orm-control" ng-enter placeholder="Message"></input>
             <button ng-click="sendMessage(message)" class="chat-send btn btn-primary">Send</button>
         </div>
 
