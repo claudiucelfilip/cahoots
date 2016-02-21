@@ -52,14 +52,11 @@
                             roomDetails: function($state, $stateParams, $q, $localStorage, Api, Error) {
                                 var deferred = $q.defer();
 
-
-
                                 // Room exists
                                 Api.getRoom( { second: $stateParams.roomId },
                                     function(response) {
 
                                         // Move forward
-                                        console.log($stateParams.justCreated)
                                         if($stateParams.justCreated) {
                                             deferred.resolve(response);
                                             return;
@@ -74,33 +71,18 @@
                                             // User exists
                                             if ($localStorage.userName) {
 
-                                                // Check if exists in meeting
-                                                var exists = false;
-                                                angular.forEach(response.users, function(user) {
-                                                    console.log(user)
-                                                    if(user.id === $localStorage.userName.id) {
-                                                        exists = true;
+                                                // Add
+                                                Api.addUser({ second: response.name, name: $localStorage.userName.name },
+                                                    function (response) {
+                                                        $localStorage.userName = response.users[response.users.length - 1];
+                                                        $localStorage.recentRoom = response;
+
+                                                        $state.go('meeting', { roomId: response.name, justCreated: true });
+                                                    },
+                                                    function (error) {
+                                                        $state.go('login', { roomId: $stateParams.roomId, requestUser: true, errorExists: Error.handler(error) });
                                                     }
-                                                });
-
-                                                if(!exists) {
-
-                                                    // Add
-                                                    Api.addUser({ second: response.name, name: $localStorage.userName.name },
-                                                        function (response) {
-                                                            $localStorage.userName = response.users[response.users.length - 1];
-                                                            $localStorage.recentRoom = response;
-
-                                                            $state.go('meeting', { roomId: response.name, justCreated: true });
-                                                        },
-                                                        function (error) {
-                                                            $state.go('login', { roomId: $stateParams.roomId, errorExists: Error.handler(error) });
-                                                        }
-                                                    );
-                                                } else {
-                                                    $state.go('login', { roomId: $stateParams.roomId, requestUser: true, errorExists: 'Sorry, this name is already used in this meeting.' });
-                                                }
-
+                                                );
 
                                             // Request user
                                             } else {
