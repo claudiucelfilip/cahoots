@@ -1,10 +1,5 @@
 <div ng-show="error">{{ error }}</div>
 
-<!-- Smart sharing -->
-<div ng-show="smartSharing" style="width: 500px; height: 500px; border: 1px solid red;">
-    <input name="url" ng-model="url" class="form-control" placeholder="Url"></input>
-    <iframe id="ifr" ng-src="{{ trustSrc('https://cahoots.local:8080/proxy/' + url) }}"></iframe>
-</div>
 
 <!-- Chat -->
 <aside class="side-section">
