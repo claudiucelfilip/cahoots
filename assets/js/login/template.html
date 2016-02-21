@@ -22,14 +22,18 @@
 
                         <div>
                             <input name="room" class="input-primary" ng-model="room" required
-                                   placeholder="Room Name" autocomplete="off" />
+                                   placeholder="Room Name" autocomplete="off"  ng-class="{error: error}"/>
                             <div class="msg" ng-show="login.room.$dirty && login.room.$error.required">Tell us the room
                                 name.
+                            </div>
+                            <div class="msg" ng-if="error">
+                                <i class="msg-icon icon-error"></i>
+                                {{ error }}
                             </div>
                         </div>
 
                         <ul class="history" ng-show="recentRoom && !requestUser">
-                            <li><a ui-sref="meeting({ roomId: recentRoom.name })">{{ recentRoom.name }}</a></li>
+                            <li><a ui-sref="meeting({ roomId: recentRoom.name })"><i class="icon-history"></i>{{ recentRoom.name }}</a></li>
                         </ul>
                     </div>
 
@@ -46,10 +50,15 @@
                 <!-- User Request -->
                 <form ng-show="requestUser" name="requestForm" novalidate>
                     <div class="white-back">
-                        <input name="user" ng-model="user" required placeholder="Your Name" autocomplete="off" />
-                        <div class="msg" ng-show="requestForm.user.$dirty && requestForm.user.$error.required">Tell us
-                            your name.
+                        <input name="user" ng-model="user" required placeholder="Your Name" autocomplete="off" ng-class="{error: error}"/>
+                        <div class="msg" ng-if="requestForm.user.$dirty && requestForm.user.$error.required">
+                            Tell us your name.
                         </div>
+                        <div class="msg" ng-if="error">
+                            <i class="msg-icon icon-error"></i>
+                            {{ error }}
+                        </div>
+
                     </div>
                     <div class="btn-wrapper">
 
@@ -73,6 +82,6 @@
         </div>
 
     </div>
-    {{ error }}
+
 
 </section>
