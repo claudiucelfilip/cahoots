@@ -16,7 +16,8 @@
             events: {
                 caption: 'client-caption',
                 captionLocal: 'local-caption',
-                message: 'client-messageCreated'
+                message: 'client-messageCreated',
+                shareLink: 'client-share-link'
             }
         })
         .config([

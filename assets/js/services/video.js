@@ -59,6 +59,9 @@
                 if (isSelf) {
                     if(!self.myStream) {
                         vid = document.getElementById('myvideo');
+                        if (!vid) {
+                            return;
+                        }
                         self.setMainStream(stream);
                         self.myStream = stream;
                         vid.muted = 'muted';
@@ -100,6 +103,9 @@
 
             skylink.on('mediaAccessSuccess', function (stream) {
                 var vid = document.getElementById('myvideo');
+                if (!vid) {
+                    return;
+                }
                 attachMediaStream(vid, stream);
                 vid.setAttribute('stream-id', stream.id);
 

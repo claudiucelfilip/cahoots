@@ -52,7 +52,7 @@
         <a class="item item-share" href="" ng-click="toggleScreenShare('screen-share')" ng-class="{'active': isFeatureActive('screen-share')}">
             <i class="icon-share"></i>
         </a>
-        <a class="item item-share" href="" ng-click="toggleScreenShare('link-share')" ng-class="{'active': isFeatureActive('link-share')}">
+        <a class="item item-share" href="" ng-click="toggleFrame('share-link')" ng-class="{'active': isFeatureActive('share-link')}">
             <i class="icon-share"></i>
         </a>
 
@@ -73,13 +73,14 @@
     <div class="video-container">
         <video id="myvideo" autoplay muted></video>
     </div>
-    <video id="mainVideo" autoplay muted></video>
+    <video id="mainVideo" autoplay muted ng-show="!showFrame"></video>
     <h2 id="subtitle" class="subtitle" ng-class="{'active': currentMessage.length}">
         <span class="text">{{currentMessage}}</span>
     </h2>
-    <div class="frame-container" ng-controller="FrameCrl">
-        <input type="url" ng-model="frameUrl"/>
-        <iframe ng-src="frameApi + frameUrl"></iframe>
+    <div class="frame-container" ng-controller="FrameCtrl" ng-show="showFrame">
+        <input type="url" class="url-input" ng-model="frameUrl"/>
+        {{frameApi + frameUrl}}
+        <iframe src="{{frameApi + frameUrl}}" class="frame"></iframe>
     </div>
 </section>
 

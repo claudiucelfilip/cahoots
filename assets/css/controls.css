@@ -21,9 +21,7 @@
     font-size: 28px;
     line-height: 2;
 }
-.controls .item-lock {
-    margin-bottom: 40px;
-}
+
 .controls .item-disabled {
     opacity: 0.4;
     pointer-events: none;

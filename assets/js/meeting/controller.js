@@ -157,7 +157,7 @@
                 $scope.toggleFeature(feature);
             };
 
-            $scope.toggleScreenShare = function(featue) {
+            $scope.toggleScreenShare = function(feature) {
 
                 if (!$scope.isFeatureActive(feature)) {
                     Video.shareScreen(function(error) {
@@ -181,15 +181,23 @@
             };
 
             $scope.showFrame = false;
-            $scope.toggleFrame = function(feature) {
-                if (!$scope.isFeatureActive(feature)) {
+            $scope.toggleFrame = function(feature, force, isEvent) {
+                if (!$scope.isFeatureActive(feature) || force) {
                     $scope.showFrame = true;
                     addFeature(feature);
+                    if (!isEvent) {
+                        Pusher.emit(Constants.events.shareLink, 'ok');
+                    }
                 } else {
                     $scope.showFrame = false;
                     removeFeature(feature);
                 }
+
+
             };
+            Pusher.on(Constants.events.shareLink, function() {
+                $scope.toggleFrame('share-link', true, true);
+            });
 
             function addFeature(feature) {
                 var index = $scope.side.activeFeatures.indexOf(feature);

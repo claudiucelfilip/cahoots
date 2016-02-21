@@ -17,11 +17,15 @@
     text-align: center;
 }
 
+.share-link .video-container {
+    transform: translateY(80px);
+}
 .video-container {
     position: relative;
     width: 120px;
     margin: 5px 10px;
-    z-index: 1;
+    z-index: 3;
+    transition: all 0.3s ease;
 }
 .video-container video {
     width: 100%;
