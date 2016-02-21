@@ -1,6 +1,5 @@
 <div ng-show="error">{{ error }}</div>
 
-
 <!-- Chat -->
 <aside class="side-section">
     <div class="chat-container" ng-controller="ChatCtrl">
@@ -75,7 +74,7 @@
     </div>
     <video id="mainVideo" autoplay muted ng-show="!showFrame"></video>
     <h2 id="subtitle" class="subtitle" ng-class="{'active': currentMessage.length}">
-        <span class="text">{{currentMessage}}</span>
+        <span class="text">{{ currentMessage }}</span>
     </h2>
     <div class="frame-container" ng-controller="FrameCtrl" ng-show="showFrame">
         <input type="url" class="url-input" ng-model="frameUrl"/>

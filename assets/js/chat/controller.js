@@ -1,8 +1,21 @@
 (function (app) {
     'use strict';
     app.controller('ChatCtrl',
-        function ($scope, Pusher, $rootScope, Constants, $timeout, Video, Message) {
+        function ($scope, Pusher, $stateParams, $rootScope, $localStorage, Constants, $timeout, Video, Message, Error, Api, Utils) {
             var timeout;
+            var translate = function() {
+                Message.lang = $scope.currentLang.value;
+
+                for (var i = 0; i < $scope.messages.length; i++) {
+                    $scope.messages[i].translate().then(function() {
+
+                        if(!$scope.$$phase) {
+                            $scope.$apply();
+                        }
+                    });
+                }
+            };
+
             $scope.langs = [
                 {
                     label: 'Translate to English',
@@ -26,20 +39,6 @@
                 }
             ];
             $scope.currentLang = $scope.langs[0];
-
-            var translate = function() {
-                Message.lang = $scope.currentLang.value;
-
-                for (var i = 0; i < $scope.messages.length; i++) {
-                    $scope.messages[i].translate().then(function() {
-
-                        if(!$scope.$$phase) {
-                            $scope.$apply();
-                        }
-                    });
-                }
-            };
-
             $scope.setLang = function(val) {
                 var index = _.findIndex($scope.langs, function(item) {
                     return item.value == val;
@@ -51,10 +50,21 @@
 
             // Chat Handle Events
             $scope.messages = [];
+            Api.getActivity({ second: $stateParams.roomId },
+                function(response) {
+                    angular.forEach(response, function(mess) {
+                        $scope.messages.push(new Message(mess));
+                    });
+                },
+                function(error) {
+                    $scope.error = Error.handler(error);
+                }
+            );
 
             $scope.handleCaption = function(event, data) {
 
                 if(data) {
+
                     $scope.$parent.currentMessage = data.text;
 
                     $timeout.cancel(timeout);
@@ -76,7 +86,7 @@
                     }
 
                     if (!$scope.$$phase) {
-                        $scope.$apply();
+                        $scope.$digest();
                     }
 
                 } else {
@@ -106,6 +116,17 @@
                 }
             };
 
+            $scope.handleMessageLocal = function(event, data) {
+                if(data) {
+                    Pusher.emitServer(Constants.events.serverActivityEvent, data);
+                    $scope.handleMessage(data);
+                } else {
+                    Pusher.emitServer(Constants.events.serverActivityEvent, event);
+                    $scope.handleMessage(event);
+                }
+
+            };
+
             $scope.handleMessage = function(event, data) {
                 var payload;
 
@@ -121,23 +142,22 @@
                 message.translate();
             };
 
-
             Pusher.on(Constants.events.message, $scope.handleMessage);
             Pusher.on(Constants.events.caption, $scope.handleCaption);
             $rootScope.$on(Constants.events.captionLocal, $scope.handleCaption);
-            $rootScope.$on(Constants.events.message, $scope.handleMessage);
+            $rootScope.$on(Constants.events.messageLocal, $scope.handleMessageLocal);
 
             $scope.sendMessage = function (message) {
                 var payload = {
                     id: Utils.generateId(),
+                    type: Constants.types.message,
                     text: message,
-                    userName: $localStorage.userName
+                    userName: $localStorage.userName,
+                    created: new Date()
                 };
 
                 Pusher.emit(Constants.events.message, payload);
-                $scope.handleMessage(payload);
+                $scope.handleMessageLocal(payload);
             };
-
-
         });
 }(angular.module('cahoots')));

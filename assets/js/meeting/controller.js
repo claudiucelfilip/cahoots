@@ -4,9 +4,6 @@
     app.controller('MeetingCtrl',
         function ($scope, $state, $stateParams, $localStorage, $rootScope, Pusher, Constants, Video, Speech, Api, DataChan, Error, Utils, Room, $timeout, $sce, roomDetails) {
 
-            var timeout;
-            console.log('a')
-
             $scope.trustSrc = function(src) {
                 return $sce.trustAsResourceUrl(src);
             };
@@ -45,88 +42,6 @@
                 }
             });
 
-
-            // Chat Handle Events
-            $scope.messages = [];
-
-            $scope.handleCaption = function(event, data) {
-                if(data) {
-                    $scope.currentMessage = data.text;
-
-                    $timeout.cancel(timeout);
-                    timeout = $timeout(function() { $scope.currentMessage = ''; }, 1500);
-
-                    if(data.streamId) {
-                        if(data.streamId !== Video.myStream.id){
-                            Video.setMainStreamById(data.streamId);
-                        }
-
-                        // Move active class around
-                        var index = _.findIndex(Video.streams, function(item) {
-                            return item.id === data.streamId;
-                        });
-
-                        if(Video.streams[index]) {
-                            $(Video.streams[index].el).addClass('active').siblings().removeClass('active');
-                        }
-                    }
-
-                    if (!$scope.$$phase) {
-                        $scope.$digest();
-                    }
-
-                } else {
-                    $scope.currentMessage = event.text;
-
-                    $timeout.cancel(timeout);
-                    timeout = $timeout(function() { $scope.currentMessage = ''; }, 1500);
-
-                    if(event.streamId) {
-                        if(event.streamId !== Video.myStream.id){
-                            Video.setMainStreamById(event.streamId);
-                        }
-
-                        // Move active class around
-                        var index = _.findIndex(Video.streams, function(item) {
-                            return item.id === event.streamId;
-                        });
-
-                        if(Video.streams[index]) {
-                            $(Video.streams[index].el).addClass('active').siblings().removeClass('active');
-                        }
-                    }
-
-                    if (!$scope.$$phase) {
-                        $scope.$digest();
-                    }
-                }
-            };
-
-            $scope.handleMessage = function(event, data) {
-                if(data) {
-                    $scope.messages.push(data);
-                } else {
-                    $scope.messages.push(event);
-                }
-            };
-
-            Pusher.on(Constants.events.message, $scope.handleMessage);
-            Pusher.on(Constants.events.caption, $scope.handleCaption);
-            $rootScope.$on(Constants.events.captionLocal, $scope.handleCaption);
-            $rootScope.$on(Constants.events.message, $scope.handleMessage);
-
-            $scope.sendMessage = function (message) {
-                var payload = {
-                    id: Utils.generateId(),
-                    text: message,
-                    userName: $localStorage.userName
-                };
-
-                Pusher.emit(Constants.events.message, payload);
-                $scope.handleMessage(payload);
-            };
-
-
             // Video
             Video.init(Room.getId());
 
@@ -145,8 +60,7 @@
             // Speech
             Speech.init();
 
-            // Translations
-
+            // Actions
             $scope.toggleSide = function(feature, force) {
                 if (typeof force !== 'undefined') {
                     $scope.side.show = force;
@@ -214,7 +128,6 @@
                     $scope.side.activeFeatures.splice(index, 1);
                 }
             }
-
 
             $scope.toggleMuteAudio = function(feature) {
                 Video.toggleMuteAudio();

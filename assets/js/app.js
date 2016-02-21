@@ -16,8 +16,17 @@
             events: {
                 caption: 'client-caption',
                 captionLocal: 'local-caption',
+<<<<<<< Updated upstream
                 message: 'client-messageCreated',
                 shareLink: 'client-share-link'
+=======
+                message: 'client-message',
+                messageLocal: 'client-messageLocal',
+                serverActivityEvent: 'client-activity-event',
+            },
+            types: {
+                message: 'message'
+>>>>>>> Stashed changes
             }
         })
         .config([
@@ -120,7 +129,7 @@
                                                         $localStorage.recentRoom = response;
 
                                                         Api.startListener({ second: response.name },
-                                                            function(response) {
+                                                            function(notUsed) {
                                                                 $state.go('meeting', { roomId: response.name, justCreated: true });
                                                             },
                                                             function(error) {
