@@ -6,6 +6,7 @@
             'ui.router',
             'ngStorage',
             'ngResource',
+            'ngSanitize',
             'pusher-angular'
         ])
         .constant('Constants', {

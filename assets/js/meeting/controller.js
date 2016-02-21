@@ -2,9 +2,13 @@
     'use strict';
 
     app.controller('MeetingCtrl',
-        function ($scope, $state, $stateParams, $localStorage, $rootScope, Pusher, Constants, Video, Speech, Api, DataChan, Error, Utils, Room, $timeout, roomDetails) {
+        function ($scope, $state, $stateParams, $localStorage, $rootScope, Pusher, Constants, Video, Speech, Api, DataChan, Error, Utils, Room, $timeout, $sce, roomDetails) {
 
             var timeout;
+
+            $scope.trustSrc = function(src) {
+                return $sce.trustAsResourceUrl(src);
+            }
 
             Room.setId($stateParams.roomId);
 
