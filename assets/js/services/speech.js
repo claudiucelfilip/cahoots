@@ -60,7 +60,11 @@
             });
 
             recognizer.onend = function(event) {
-                recognizer.start();
+                try {
+                    recognizer.start();
+                } catch (e) {
+                    console.log(e);
+                }
             };
 
             setTimeout(function() {
