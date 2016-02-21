@@ -40,12 +40,17 @@
 
                         Api.startListener({ second: response.name },
                             function(response) {
+                                $localStorage.userName = response.users[0];
+                                $localStorage.recentRoom = response;
+
                                 $state.go('meeting', { roomId: response.name, justCreated: true });
                             },
                             function(error) {
                                 $scope.error = Error.handler(error);
                             }
                         );
+
+                        $state.go('meeting', { roomId: response.name, justCreated: true });
                     },
                     function(error) {
                         $scope.error = Error.handler(error);
