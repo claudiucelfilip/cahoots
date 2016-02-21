@@ -12,9 +12,33 @@
 
             // Modal
             $scope.showModal = false;
-            $scope.toggleModal = function(){
+            $scope.toggleModal = function() {
                 $scope.showModal = !$scope.showModal;
             };
+
+            // Smart sharing
+            function getFrameTargetElement(objI) {
+                var objFrame = objI.contentWindow;
+                if(window.pageYOffset == undefined) {
+                    objFrame = (objFrame .document.documentElement) ? objFrame .document.documentElement : objFrame =document.body;
+                }
+                return objFrame ;
+            }
+
+            $('#ifr').load(function () {
+                var frame = getFrameTargetElement(document.getElementById('ifr'));
+
+                frame.onclick = function(e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    e.stopPropagation();
+                }
+
+                frame.onscroll = function () {
+                    console.log(frame.scrollX);
+                    console.log(frame.scrollY);
+                }
+            });
 
 
             // Chat Handle Events

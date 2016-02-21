@@ -1,5 +1,11 @@
 <div ng-show="error">{{ error }}</div>
 
+<!-- Smart sharing -->
+<div ng-show="smartSharing" style="width: 500px; height: 500px; border: 1px solid red;">
+    <input name="url" ng-model="url" class="form-control" placeholder="Url"></input>
+    <iframe id="ifr" ng-src="{{ 'https://cahoots.local:8080/proxy/' + url }}"></iframe>
+</div>
+
 <!-- Chat -->
 <aside class="side-section">
     <div class="chat-container" ng-controller="ChatCtrl">
@@ -32,7 +38,6 @@
     <nav class="controls">
         <a class="item item-lock" href="" ng-click="toggleLock()">
             <i class="icon-unlocked"></i>
-
         </a>
         <a class="item" href="" ng-click="toggleModal()">
             <i class="icon-invite"></i>

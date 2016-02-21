@@ -16,6 +16,14 @@
                         isArray: false,
                         cache: false
                     },
+                    startListener: {
+                        method: 'POST',
+                        params: {
+                            first: 'pusher',
+                            third: 'receive'
+                        },
+                        cache: false
+                    },
                     getRoom: {
                         method: 'GET',
                         params: {
