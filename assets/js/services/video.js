@@ -37,34 +37,63 @@
 
 
             skylink.setDebugMode(true);
-            skylink.on('peerJoined', function (peerId, peerInfo, isSelf) {
-
-                var vid = document.createElement('video');
-                vid.autoplay = true;
-
-                vid.id = peerId;
-                $videoContainer.append(vid);
-            });
 
             skylink.on('incomingStream', function (peerId, stream, isSelf) {
 
-                var vid = document.getElementById(peerId);
+                var vid;
+
+                if (isSelf) {
+                    if(!self.myStream) {
+                        vid = document.getElementById('myvideo');
+                        self.setMainStream(stream);
+                        self.myStream = stream;
+                        vid.muted = 'muted';
+                    } else {
+                        return
+                    }
+                } else {
+                    vid = document.createElement('video');
+                }
+
                 vid.setAttribute('stream-id', stream.id);
+                vid.autoplay = true;
+
                 stream.el = vid;
+                stream.peerId = peerId;
+                vid.id = peerId;
+
+                $videoContainer.append(vid);
+
                 self.streams.push(stream);
 
                 attachMediaStream(vid, stream);
 
-                if (isSelf) {
-                    self.setMainStream(stream);
-                    self.myStream = stream;
-                    vid.muted = 'muted';
-                }
             });
 
             skylink.on('peerLeft', function (peerId, peerInfo, isSelf) {
                 var vid = document.getElementById(peerId);
                 $(vid).remove();
+
+                var index = _.findIndex(self.streams, function(item) {
+                    return item.peerId === peerId;
+                });
+
+                if (index !== -1) {
+                    self.streams.splice(index, 0);
+                }
+            });
+
+
+            skylink.on('mediaAccessSuccess', function (stream) {
+                var vid = document.getElementById('myvideo');
+                attachMediaStream(vid, stream);
+                vid.setAttribute('stream-id', stream.id);
+
+                stream.el = vid;
+                self.setMainStream(stream);
+                self.streams.push(stream);
+                self.myStream = stream;
+
             });
 
 
@@ -73,17 +102,26 @@
             };
 
             this.stopScreen = function() {
+                self.myStream = null;
                 skylink.stopScreen();
+
 
             };
 
             skylink.init({
                 apiKey: 'a1a9c9c3-da9a-417c-bb2b-0ebc55b119e3',
-                defaultRoom: roomId
+                defaultRoom: roomId,
+                enableDataChannel: false
             }, function () {
                 skylink.joinRoom({
                     audio: true,
-                    video: true
+                    video: {
+                        resolution: {
+                            width: 1280,
+                            height: 720
+                        },
+                        frameRate: 24
+                    }
                 });
             });
         };
