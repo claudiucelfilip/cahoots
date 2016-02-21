@@ -156,8 +156,8 @@
                 $scope.toggleFeature(feature);
             };
 
-            $scope.toggleScreenShare = function() {
-                var feature = 'screen-share';
+            $scope.toggleScreenShare = function(featue) {
+
                 if (!$scope.isFeatureActive(feature)) {
                     Video.shareScreen(function(error) {
                         removeFeature(feature);
@@ -176,6 +176,17 @@
                     $scope.side.activeFeatures.push(feature);
                 } else {
                     $scope.side.activeFeatures.splice(index, 1);
+                }
+            };
+
+            $scope.showFrame = false;
+            $scope.toggleFrame = function(feature) {
+                if (!$scope.isFeatureActive(feature)) {
+                    $scope.showFrame = true;
+                    addFeature(feature);
+                } else {
+                    $scope.showFrame = false;
+                    removeFeature(feature);
                 }
             };
 
