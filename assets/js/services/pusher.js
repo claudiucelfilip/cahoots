@@ -23,6 +23,7 @@
                     authEndpoint: Constants.api.url + 'pusher/auth'
                 }));
 
+
                 // Handle events
                 pusher.connection.bind('error', function(error) {
                     console.error(error)
@@ -50,15 +51,12 @@
                 }
 
                 function on(event, callback) {
-                    channel = pusher.subscribe('private-room-' + roomId);
                     channel.bind(event, callback);
                 }
 
 
                 function emit(event, payload) {
-                    channel = pusher.subscribe('private-room-' + roomId);
                     channel.trigger(event, payload);
-
                     return payload;
                 }
 

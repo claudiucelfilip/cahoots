@@ -2,7 +2,8 @@
     'use strict';
 
     app.controller('MeetingCtrl',
-        function ($scope, $state, $stateParams, $localStorage, Pusher, Constants, Video, Speech, Api, DataChan, Error, Utils) {
+        function ($scope, $state, $stateParams, $localStorage, Pusher, Constants, Video, Speech, Api, DataChan, Error, Utils, Room) {
+            Room.setId($stateParams.roomId);
 
             $scope.joinRoom = function (userName) {
                 Api.addUser({second: $stateParams.roomId, name: userName},
@@ -39,7 +40,7 @@
                         $scope.error = Error.handler(error);
                     }
                 );
-            }
+            };
 
             // Room exists
             Api.getRoom({second: $stateParams.roomId},
@@ -76,8 +77,8 @@
                 }
             );
 
-            Pusher.init($stateParams.roomId);
-            DataChan.init($stateParams.roomId);
+            Pusher.init(Room.getId());
+            DataChan.init(Room.getId());
 
 
             // Chat
@@ -108,13 +109,15 @@
                 var payload = {
                     id: Utils.generateId(),
                     text: message,
-                    streamId: Video.myId
+                    streamId: Video.myStream.id
                 };
                 DataChan.emit(Constants.events.message, payload);
             };
 
+
+
             // Video
-            Video.init($stateParams.roomId);
+            Video.init(Room.getId());
 
             $scope.recording = false;
 

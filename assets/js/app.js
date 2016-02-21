@@ -15,7 +15,8 @@
             events: {
                 messageCreated: 'client-messageCreated',
                 message: 'client-partial-message'
-            }
+            },
+            uniqueId: 'foo'
         })
         .config([
             '$locationProvider',
