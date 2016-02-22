@@ -128,7 +128,7 @@ function loadAudioBuffer(url) {
 
 function finishLoad() {
 	source.buffer = audioBuffer;
-	source.loop = true;
+	source.loop = false;
 	source.start(0.0);
 	startViz();
 }
