@@ -2,8 +2,9 @@
     'use strict';
 
     app.controller('MeetingCtrl',
-        function ($scope, $state, $stateParams, $localStorage, $rootScope, Pusher, Constants, Video, Speech, Api, DataChan, Error, Utils, Room, $timeout, $sce, roomDetails) {
+        function ($scope, $state, $location, $stateParams, $localStorage, $rootScope, Pusher, Constants, Video, Speech, Api, DataChan, Error, Utils, Room, $timeout, $sce, roomDetails) {
 
+            $scope.fullPath = $location.absUrl();
             $scope.currentUser = $localStorage.userName.name;
             $scope.trustSrc = function(src) {
                 return $sce.trustAsResourceUrl(src);

@@ -98,7 +98,7 @@
 
     <nav class="controls">
         <a class="item item-lock" ng-click="toggleFeature('clipboard')"
-           ng-class="{'active': isFeatureActive('clipboard')}" href="" ngclipboard data-clipboard-text="Ops" ngclipboard-success="clipboardSuccess(e);" data-placement="left" title="Invite your friends" tooltip>
+           ng-class="{'active': isFeatureActive('clipboard')}" href="" ngclipboard data-clipboard-text="{{ fullPath }}" ngclipboard-success="clipboardSuccess(e);" data-placement="left" title="Invite your friends" tooltip>
             <i class="icon-invite" data-toggle="tooltip"></i>
         </a>
         <a class="item item-disabled" href="" ng-click="" data-placement="left" title="Locking rooms soon." tooltip>

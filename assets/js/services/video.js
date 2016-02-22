@@ -99,7 +99,7 @@
             });
 
             skylink.on('peerJoined', function (peerId, peerInfo, isSelf) {
-                if(!isSelf) {
+                if(isSelf) {
                     var payload = {
                         id: Utils.generateId(),
                         type: Constants.types.join,
@@ -116,11 +116,6 @@
                         activeUsers++;
                     }
                 });
-
-                console.log($('video').length);
-
-                console.log(activeUsers)
-
 
                 if(activeUsers > 1) {
                     $('#mainVideo').show();
@@ -147,7 +142,7 @@
                 }
 
                 // Notify server
-                if(!isSelf) {
+                if(isSelf) {
                     var payload = {
                         id: Utils.generateId(),
                         type: Constants.types.leave,
