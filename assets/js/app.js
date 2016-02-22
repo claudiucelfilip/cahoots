@@ -7,6 +7,7 @@
             'ngStorage',
             'ngResource',
             'ngSanitize',
+            'ngclipboard',
             'pusher-angular'
         ])
         .constant('Constants', {

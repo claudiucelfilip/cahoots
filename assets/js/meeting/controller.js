@@ -12,7 +12,10 @@
 
             Pusher.init(Room.getId());
 
-
+            $scope.clipboardSuccess = function(e) {
+                $scope.notification = 'The url has been copied to your clipboard!';
+                $timeout(function() { $scope.notification = null }, 3000);
+            };
 
 
             // Modal

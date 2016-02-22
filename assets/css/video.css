@@ -1,10 +1,12 @@
 #mainVideo {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    min-width: 80%;
-    min-height: 80%;
+    /*top: 50%;*/
+    top: 0;
+    /*left: 50%;*/
+    left: 0;
+    /*transform: translateX(-50%) translateY(-50%);*/
+    min-width: 100%;
+    min-height: 100%;
 
     max-width: 100%;
     max-height: 100%;
