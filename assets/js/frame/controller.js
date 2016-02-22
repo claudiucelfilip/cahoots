@@ -3,7 +3,7 @@
     app.controller('FrameCtrl',
         function ($scope, Pusher, $rootScope, Constants, $timeout, Video, Message) {
 
-            $scope.frameUrl = 'http://reddit.com';
+            $scope.frameUrl = '';
             $scope.frameApi = Constants.api.url + 'proxy/';
             $scope.$watch('frameUrl', function(newValue, previousValue) {
                 if (newValue !== previousValue) {
