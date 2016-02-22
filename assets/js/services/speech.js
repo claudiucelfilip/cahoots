@@ -44,7 +44,7 @@
                 }
 
                 var data = {
-                    type: Constants.types.message,
+                    type: Constants.types.messageVoice,
                     id: currentMessageId,
                     text: str,
                     streamId: Video.myStream && Video.myStream.id,

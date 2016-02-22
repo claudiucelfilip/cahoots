@@ -118,13 +118,10 @@
 
             $scope.handleMessageLocal = function(event, data) {
                 if(data) {
-                    Pusher.emitServer(Constants.events.serverActivityEvent, data);
                     $scope.handleMessage(data);
                 } else {
-                    Pusher.emitServer(Constants.events.serverActivityEvent, event);
                     $scope.handleMessage(event);
                 }
-
             };
 
             $scope.handleMessage = function(event, data) {
@@ -144,19 +141,22 @@
 
             Pusher.on(Constants.events.message, $scope.handleMessage);
             Pusher.on(Constants.events.caption, $scope.handleCaption);
+            Pusher.on(Constants.events.activityEvent, $scope.handleMessage);
             $rootScope.$on(Constants.events.captionLocal, $scope.handleCaption);
             $rootScope.$on(Constants.events.messageLocal, $scope.handleMessageLocal);
+            $rootScope.$on(Constants.events.activityEvent, $scope.handleMessage);
 
             $scope.sendMessage = function (message) {
                 var payload = {
                     id: Utils.generateId(),
-                    type: Constants.types.message,
+                    type: Constants.types.messageText,
                     text: message,
                     userName: $localStorage.userName,
                     created: new Date()
                 };
 
                 Pusher.emit(Constants.events.message, payload);
+                Pusher.emitServer(payload);
                 $scope.handleMessageLocal(payload);
             };
         });

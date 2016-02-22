@@ -61,8 +61,9 @@
                     return payload;
                 }
 
-                function emitServer(event, payload) {
-                    channelServer.trigger(event, payload);
+                function emitServer(payload) {
+                    channel.trigger(Constants.events.activityEvent, payload);
+                    channelServer.trigger(Constants.events.serverActivityEvent, payload);
                     return payload;
                 }
 

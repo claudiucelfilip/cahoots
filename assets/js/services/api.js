@@ -7,14 +7,13 @@
             '$resource',
             'Constants',
             function ($resource, Constants) {
-                return $resource(Constants.api.url + ':first/:second/:third', { first: '@first', second: '@second', third: '@third'}, {
+                return $resource(Constants.api.url + ':first/:second/:third/:fourth', { first: '@first', second: '@second', third: '@third', fourth: '@fourth'}, {
                     createRoom: {
                         method: 'POST',
                         params: {
                             first: 'rooms'
                         },
-                        isArray: false,
-                        cache: false
+                        isArray: false
                     },
                     getActivity: {
                         method: 'GET',
@@ -22,31 +21,34 @@
                             first: 'rooms',
                             third: 'activity'
                         },
-                        isArray: true,
-                        cached: true
+                        isArray: true
+                    },
+                    deleteUser: {
+                        method: 'DELETE',
+                        params: {
+                            first: 'rooms',
+                            third: 'users'
+                        }
                     },
                     startListener: {
                         method: 'POST',
                         params: {
                             first: 'pusher',
                             third: 'receive'
-                        },
-                        cache: false
+                        }
                     },
                     getRoom: {
                         method: 'GET',
                         params: {
                             first: 'rooms'
-                        },
-                        cache: false
+                        }
                     },
                     addUser: {
                         method: 'POST',
                         params: {
                             first: 'rooms',
                             third: 'users'
-                        },
-                        cache: false
+                        }
                     },
                     getMessages: {
                         method: 'GET',
@@ -54,8 +56,7 @@
                             first: 'room',
                             third: 'messages'
                         },
-                        isArray: false,
-                        cache: false
+                        isArray: false
                     }
                 });
             }
