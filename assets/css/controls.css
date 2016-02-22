@@ -9,6 +9,7 @@
 }
 
 .controls .item {
+    position: relative;
     display: block;
     height: 80px;
     color: #fff;
