@@ -13,7 +13,13 @@
 
             Pusher.init(Room.getId());
 
-
+            $scope.clipboardSuccess = function(e) {
+                $scope.notification = 'The url has been copied to your clipboard!';
+                $scope.toggleFeature('clipboard', false);
+                $timeout(function() {
+                    $scope.notification = null;
+                }, 3000);
+            };
 
 
             // Modal
@@ -65,7 +71,7 @@
                 }
             };
 
-            $scope.toggleFeature = function(feature, force) {
+            $scope.toggleFeature = function(feature) {
                 var index = $scope.side.activeFeatures.indexOf(feature);
 
                 if (index === -1) {

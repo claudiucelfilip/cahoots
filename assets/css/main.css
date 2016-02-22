@@ -75,3 +75,27 @@ button:active{
 .margin-top-20 {
     margin-top: 20px;
 }
+
+.notification {
+    color: rgba(0,0,0,0.8);
+    padding: 20px;
+    font-weight:bold;
+    font-size: 15px;
+    text-align: center;
+
+}
+.slider {
+    position: fixed;
+    background-color: #FFB732;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 102123;
+    box-shadow: 0 1px 1px 1px rgba(0,0,0,0.1);
+    transform: translateY(-100%);
+    transition: all 0.3s ease;
+}
+
+.slider.active {
+    transform: translateY(0);
+}

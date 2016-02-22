@@ -1,101 +1,86 @@
+<div class="slider" ng-class="{ active: notification }">
+    <div class="notification">{{ notification }}</div>
+</div>
+
+
 <div ng-show="error">{{ error }}</div>
 
 <!-- Chat -->
 <aside class="side-section">
     <div class="chat-container" ng-controller="ChatCtrl">
         <!-- Single button -->
-        <div class="btn-group chat-translate">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                    aria-haspopup="true"
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
                 {{currentLang.label}} <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
                 <li ng-repeat="lang in langs"><a href="#" ng-click="setLang(lang.value)">{{lang.label}}</a></li>
             </ul>
-
-        </div>
-        <div class="search clearfix">
-            <input type="text" ng-model="searchTerm" placeholder="Search by keyword" />
         </div>
 
-        <ul class="chat-messages">
+        <div class="chat">
+            <input name="message" ng-model="message" class=" orm-control" ng-enter placeholder="Message"></input>
+            <button ng-click="sendMessage(message)" class="chat-send btn btn-primary">Send</button>
+        </div>
 
-            <li class="message" ng-repeat="message in messages | filter:searchTerm" ng-class="{'in': message.userName.name !== currentUser,
-            'out': message.userName.name === currentUser}">
+        <ul class="chat-messages list-group">
+            <li class="list-group-item" ng-hide="messages">No chat messages available</li>
+            <li class="list-group-item" ng-repeat="message in messages track by $index">
 
                 <div ng-show="message.type == 'messageVoice'">
-                    <div class="message-meta">
-                        via voice
-                        <span class="pull-right">{{message.created | date: "HH:mm a" | lowercase}}</span>
-                    </div>
-                    <div class="message-avatar">{{ message.userName.name.slice(0,2).toUpperCase() }}</div>
-                    <div class="message-content">
-                        <span ng-show="!message.translations[currentLang.value]">{{ message.text }}</span>
-                        <span ng-show="message.translations[currentLang.value]">{{ message.translations[currentLang.value].text }}</span>
-                    </div>
+                    {{ message.userName.name }} (captioned):
+                    <span ng-show="!message.translations[currentLang.value]">{{ message.text }}</span>
+                    <span ng-show="message.translations[currentLang.value]">{{ message.translations[currentLang.value].text }}</span>
                 </div>
 
                 <div ng-show="message.type == 'messageText'">
-                    <div class="message-meta">
-                        via message
-                        <span class="pull-right">{{message.created | date: "HH:mm a" | lowercase}}</span>
-                    </div>
-                    <div class="message-avatar">{{ message.userName.name.slice(0,2).toUpperCase() }}</div>
-                    <div class="message-content">
-                        <span ng-show="!message.translations[currentLang.value]">{{ message.text }}</span>
-                        <span ng-show="message.translations[currentLang.value]">{{ message.translations[currentLang.value].text }}</span>
-                    </div>
+                    {{ message.userName.name }}:
+                    <span ng-show="!message.translations[currentLang.value]">{{ message.text }}</span>
+                    <span ng-show="message.translations[currentLang.value]">{{ message.translations[currentLang.value].text }}</span>
                 </div>
 
-                <div class="message-action" ng-if="message.type == 'join'">
+                <div ng-show="message.type == 'join'">
                     {{ message.userName.name }} joined.
                 </div>
 
-                <div class="message-action" ng-if="message.type == 'leave'">
-                    {{ message.userName.name }} left.
-                </div>
-                <div class="message-action" ng-if="message.type == 'shareLink'">
+                <div ng-show="message.type == 'leave'">
                     {{ message.userName.name }} left.
                 </div>
 
-                <div class="message-action" ng-if="message.type == 'mute' && message.value == 1">
+                <div ng-show="message.type == 'mute' && message.value == 1">
                     {{ message.userName.name }} muted his microphone.
                 </div>
 
-                <div class="message-action" ng-if="message.type == 'mute' && message.value == 0">
+                <div ng-show="message.type == 'mute' && message.value == 0">
                     {{ message.userName.name }} unmuted his microphone.
                 </div>
 
-                <div class="message-action" ng-if="message.type == 'noVideo' && message.value == 1">
+                <div ng-show="message.type == 'noVideo' && message.value == 1">
                     {{ message.userName.name }} stopped the video sharing.
                 </div>
 
-                <div class="message-action" ng-if="message.type == 'noVideo' && message.value == 0">
+                <div ng-show="message.type == 'noVideo' && message.value == 0">
                     {{ message.userName.name }} started the video sharing.
                 </div>
 
-                <div class="message-action" ng-if="message.type == 'shareScreen'">
+                <div ng-show="message.type == 'shareScreen'">
                     {{ message.userName.name }} shared the screen.
                 </div>
 
-                <div class="message-action" ng-if="message.type == 'stopShareScreen'">
+                <div ng-show="message.type == 'stopShareScreen'">
                     {{ message.userName.name }} stopped sharing the screen.
                 </div>
             </li>
         </ul>
-
-        <form class="chat-form"  ng-submit="sendMessage(message)">
-            <input type="text" ng-model="message" placeholder="Type a message here"/>
-        </form>
-
     </div>
 
     <nav class="controls">
-        <a class="item item-lock" href="" ng-click="toggleModal()" data-placement="left" title="Invite your friends" tooltip>
+        <a class="item item-lock" ng-click="toggleFeature('clipboard')"
+           ng-class="{'active': isFeatureActive('clipboard')}" href="" ngclipboard data-clipboard-text="Ops" ngclipboard-success="clipboardSuccess(e);" data-placement="left" title="Invite your friends" tooltip>
             <i class="icon-invite" data-toggle="tooltip"></i>
         </a>
-        <a class="item item-disabled" data-placement="left" title="Lock meetings soon." tooltip>
+        <a class="item item-disabled" href="" ng-click="" data-placement="left" title="Locking rooms soon." tooltip>
             <i class="icon-unlocked"></i>
         </a>
         <a class="item item-video-mute" href="" ng-click="toggleMuteVideo('video-mute')"

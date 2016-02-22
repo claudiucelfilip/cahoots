@@ -26,6 +26,7 @@
     "lodash": "^4.5.0",
     "datachannel": "*",
     "clipboard": "^1.5.8",
-    "angular-sanitize": "^1.5.0"
+    "angular-sanitize": "^1.5.0",
+    "ngclipboard": "^1.1.0"
   }
 }
