@@ -2,10 +2,137 @@
 .chat-container {
     position: relative;
     padding: 15px 25px;
-    font-size:14px;
-    color:#3a3e3f;
-    text-align:left;
+    font-size: 14px;
+    color: #3a3e3f;
+    text-align: left;
+    height: 100%;
+    overflow: hidden;
 }
+
 .show-chat .chat-container {
     transform: translateX(-100%);
+}
+.chat-messages, .chat-form {
+    position: absolute;
+    top: 0;
+    left: 25px;
+}
+.chat-messages {
+    list-style: none;
+    padding: 0;
+    overflow: auto;
+    height: 100%;
+    border-top: 120px solid #fff;
+    border-bottom: 120px solid #fff;
+}
+
+.chat-form {
+    top: auto;
+    bottom: 0px;
+    border-top: solid 2px #e4e4e4;
+    width: 280px;
+}
+.chat-form input {
+    border: none;
+    font-size: 14px;
+    color: #3a3e3f;
+    padding: 30px 0;
+    width: 100%;
+}
+.chat-translate {
+    z-index: 5;
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: left;
+
+}
+.chat-translate .dropdown-toggle,
+.chat-translate .dropdown-menu {
+    width: 100%;
+    text-align: left;
+    background: #fff;
+}
+.chat-translate .dropdown-toggle .caret {
+    float: right;
+    margin-top: 8px;
+}
+.chat-messages .message-content {
+    position: relative;
+}
+
+.chat-messages .message.in .message-content {
+    background: rgba(51, 168, 184, 0.15);
+}
+
+.chat-messages .message.out .message-content {
+    background: rgba(51, 168, 184, 0.30);
+    border-radius: 8px;
+
+}
+
+.message {
+    clear: both;
+    padding: 10px 0;
+}
+
+.message-content, .message-avatar {
+    border-radius: 8px;
+    float: left;
+}
+.chat-messages .message.out .message-avatar {
+    opacity: 0;
+}
+.chat-messages .message.out .message-container {
+    background:rgba(51, 168, 184, 0.30);
+}
+.message-avatar {
+    width: 33px;
+    height: 33px;
+    color: #fff;
+    font-weight: 700;
+    background: #33a9b8;
+    border-radius: 100%;
+    text-align: center;
+    line-height: 33px;
+    font-size: 13px;
+    padding: 0;
+    margin-right: 10px;
+}
+
+.message-content {
+    width: 232px;
+    padding: 6px 10px;
+    word-break: break-all;
+}
+
+.message-meta {
+    font-size: 12px;
+    color: #b8b8b8;
+    line-height: 17px;
+    text-align: left;
+    padding-left: 50px;
+}
+
+.message-action {
+    font-weight: 700;
+    font-size: 12px;
+    color: #9b9b9b;
+    line-height: 17px;
+    text-align: left;
+}
+
+.search {
+    position: relative;
+    z-index: 4;
+    clear: both;
+    border-top:solid 2px #e6e6e6;
+}
+.search input {
+    background:#e4e4e4;
+    border-radius:8px;
+    width: 100%;
+    height:33px;
+    box-shadow: none;
+    border: none;
+    margin: 10px 0;
 }

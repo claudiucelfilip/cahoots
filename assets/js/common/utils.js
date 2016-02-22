@@ -3,6 +3,7 @@
 
     angular
         .module('cahoots')
+
         .factory('Error', function() {
             return {
                 handler: function (response) {

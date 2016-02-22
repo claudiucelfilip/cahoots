@@ -15,10 +15,11 @@
                     });
                 }
             };
+            $scope.message = '';
 
             $scope.langs = [
                 {
-                    label: 'Translate to English',
+                    label: 'Do not translate',
                     value: 'en'
                 },
                 {
@@ -61,103 +62,120 @@
                 }
             );
 
-            $scope.handleCaption = function(event, data) {
+            $scope.searchTerm = '';
 
-                if(data) {
 
-                    $scope.$parent.currentMessage = data.text;
+            // Activity local
+            $scope.activityLocal = function(event, data) {
+                var message = new Message(data);
+                $scope.messages.push(message);
+                message.translate();
 
-                    $timeout.cancel(timeout);
-                    timeout = $timeout(function() { $scope.$parent.currentMessage = ''; }, 1500);
+                Pusher.emit(Constants.events.activityEvent, data);
+                Pusher.emitServer(data);
+            };
 
-                    if(data.streamId) {
-                        if(data.streamId !== Video.myStream.id){
-                            Video.setMainStreamById(data.streamId);
-                        }
+            // Activity received
+            $scope.activityReceived = function(data) {
 
-                        // Move active class around
-                        var index = _.findIndex(Video.streams, function(item) {
-                            return item.id === data.streamId;
-                        });
+                var message = new Message(data);
+                $scope.messages.push(message);
+                message.translate();
+            };
 
-                        if(Video.streams[index]) {
-                            $(Video.streams[index].el).addClass('active').siblings().removeClass('active');
-                        }
+            // Caption receive
+            $scope.captionReceive = function(data) {
+                $scope.$parent.currentMessage = data.text;
+
+                $timeout.cancel(timeout);
+                timeout = $timeout(function() { $scope.$parent.currentMessage = ''; }, 1500);
+
+                if(data.streamId) {
+                    if(data.streamId !== Video.myStream.id){
+                        Video.setMainStreamById(data.streamId);
                     }
 
-                    if (!$scope.$$phase) {
-                        $scope.$apply();
+                    // Move active class around
+                    var index = _.findIndex(Video.streams, function(item) {
+                        return item.id === data.streamId;
+                    });
+
+                    if(Video.streams[index]) {
+                        $(Video.streams[index].el).addClass('active').siblings().removeClass('active');
                     }
+                }
 
-                } else {
-                    $scope.$parent.currentMessage = event.text;
-
-                    $timeout.cancel(timeout);
-                    timeout = $timeout(function() { $scope.$parent.currentMessage = ''; }, 1500);
-
-                    if(event.streamId) {
-                        if(event.streamId !== Video.myStream.id){
-                            Video.setMainStreamById(event.streamId);
-                        }
-
-                        // Move active class around
-                        var index = _.findIndex(Video.streams, function(item) {
-                            return item.id === event.streamId;
-                        });
-
-                        if(Video.streams[index]) {
-                            $(Video.streams[index].el).addClass('active').siblings().removeClass('active');
-                        }
-                    }
-
-                    if (!$scope.$$phase) {
-                        $scope.$apply();
-                    }
+                if (!$scope.$$phase) {
+                    $scope.$apply();
                 }
             };
 
-            $scope.handleMessageLocal = function(event, data) {
-                if(data) {
-                    $scope.handleMessage(data);
-                } else {
-                    $scope.handleMessage(event);
-                }
+            // Caption local
+            $scope.captionLocal = function(event, data) {
+                $scope.captionReceive(data);
+
+                Pusher.emit(Constants.events.caption, data);
             };
 
-            $scope.handleMessage = function(event, data) {
-                var payload;
+            // Voice message
+            $scope.voiceMessageLocal = function(event, data) {
+                data.type = Constants.types.messageVoice;
 
-                if(data) {
-                    payload = data;
-                } else {
-                    payload = event;
-                }
+                Pusher.emitServer(data, 'onlyServer');
 
-                var message = new Message(payload);
+
+                var message = new Message(data);
                 $scope.messages.push(message);
 
                 message.translate();
             };
 
-            Pusher.on(Constants.events.message, $scope.handleMessage);
-            Pusher.on(Constants.events.caption, $scope.handleCaption);
-            Pusher.on(Constants.events.activityEvent, $scope.handleMessage);
-            $rootScope.$on(Constants.events.captionLocal, $scope.handleCaption);
-            $rootScope.$on(Constants.events.messageLocal, $scope.handleMessageLocal);
-            $rootScope.$on(Constants.events.activityEvent, $scope.handleMessage);
+            // Button
+            $scope.sendMessage = function () {
 
-            $scope.sendMessage = function (message) {
+                if (!$scope.message.length ) {
+                    return false;
+                }
                 var payload = {
                     id: Utils.generateId(),
                     type: Constants.types.messageText,
-                    text: message,
+                    text: $scope.message,
                     userName: $localStorage.userName,
                     created: new Date()
                 };
 
-                Pusher.emit(Constants.events.message, payload);
                 Pusher.emitServer(payload);
-                $scope.handleMessageLocal(payload);
+
+                var message = new Message(payload);
+                $scope.messages.push(message);
+
+                message.translate();
+                $scope.message = '';
             };
+
+
+            Pusher.on(Constants.events.caption, $scope.captionReceive);
+            Pusher.on(Constants.events.activityEvent, $scope.activityReceived);
+
+            $rootScope.$on(Constants.events.captionLocal, $scope.captionLocal);
+            $rootScope.$on(Constants.events.messageLocal, $scope.voiceMessageLocal);
+            $rootScope.$on(Constants.events.activityEvent, $scope.activityLocal);
+
+            var $chatMessages = $('.chat-messages');
+
+            function getToLast() {
+                var offsetTop;
+
+                offsetTop = $chatMessages[0].scrollHeight;
+
+                $chatMessages.animate({scrollTop: offsetTop});
+            }
+            $scope.$watchCollection('messages', function(newValue, oldValue) {
+
+                if (newValue.length != oldValue.length) {
+                    getToLast();
+                }
+            });
+            getToLast();
         });
 }(angular.module('cahoots')));

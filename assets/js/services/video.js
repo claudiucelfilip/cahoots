@@ -87,6 +87,7 @@
             });
 
             skylink.on('peerJoined', function (peerId, peerInfo, isSelf) {
+
                 if(!isSelf) {
                     var payload = {
                         id: Utils.generateId(),
@@ -95,7 +96,6 @@
                         created: new Date()
                     };
 
-                    Pusher.emitServer(payload);
                     $rootScope.$emit(Constants.events.activityEvent, payload);
                 }
             });
@@ -123,7 +123,6 @@
                         created: new Date()
                     };
 
-                    Pusher.emitServer(payload);
                     $rootScope.$emit(Constants.events.activityEvent, payload);
                 }
 
@@ -163,7 +162,6 @@
                     created: new Date()
                 };
 
-                Pusher.emitServer(payload);
                 $rootScope.$emit(Constants.events.activityEvent, payload);
 
                 skylink.shareScreen(errorCallback);
@@ -178,7 +176,6 @@
                     created: new Date()
                 };
 
-                Pusher.emitServer(payload);
                 $rootScope.$emit(Constants.events.activityEvent, payload);
 
                 self.myStream = null;
@@ -204,7 +201,6 @@
                     created: new Date()
                 };
 
-                Pusher.emitServer(payload);
                 $rootScope.$emit(Constants.events.activityEvent, payload);
 
                 streamConfig.audioMuted = !streamConfig.audioMuted;
@@ -220,7 +216,6 @@
                     created: new Date()
                 };
 
-                Pusher.emitServer(payload);
                 $rootScope.$emit(Constants.events.activityEvent, payload);
 
                 streamConfig.videoMuted = !streamConfig.videoMuted;

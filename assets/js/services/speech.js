@@ -54,10 +54,8 @@
 
                 if( ! final ) {
                     $rootScope.$emit(Constants.events.captionLocal, data);
-                    Pusher.emit(Constants.events.caption, data);
                 } else {
                     $rootScope.$emit(Constants.events.messageLocal, data);
-                    Pusher.emit(Constants.events.message, data);
                 }
             });
 

@@ -32,6 +32,7 @@
                 mute: 'mute',
                 noVideo: 'noVideo',
                 shareScreen: 'shareScreen',
+                shareLink: 'shareLink',
                 stopShareScreen: 'stopShareScreen'
             }
         })
@@ -172,8 +173,8 @@
         ])
         .run(function($rootScope) {
             $rootScope.side = {
-                show: false,
-                activeFeatures: []
+                show: true,
+                activeFeatures: ['chat']
             };
         })
 }());

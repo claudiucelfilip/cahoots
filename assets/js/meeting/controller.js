@@ -4,6 +4,7 @@
     app.controller('MeetingCtrl',
         function ($scope, $state, $stateParams, $localStorage, $rootScope, Pusher, Constants, Video, Speech, Api, DataChan, Error, Utils, Room, $timeout, $sce, roomDetails) {
 
+            $scope.currentUser = $localStorage.userName.name;
             $scope.trustSrc = function(src) {
                 return $sce.trustAsResourceUrl(src);
             };
@@ -76,6 +77,15 @@
 
             $scope.toggleFrame = function(feature, force, isEvent) {
                 toggleFrame(feature, force, isEvent);
+                var payload = {
+                    id: Utils.generateId(),
+                    type: Constants.types.shareLink,
+                    userName: $localStorage.userName,
+                    created: new Date()
+                };
+
+                Pusher.emitServer(payload);
+                $rootScope.$emit(Constants.events.shareLink, payload);
                 $scope.ownsFrame = $scope.showFrame;
             };
 
