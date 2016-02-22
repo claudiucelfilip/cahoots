@@ -92,32 +92,33 @@
     </div>
 
     <nav class="controls">
-        <a class="item item-lock item-disabled">
+        <a class="item item-lock" href="" ng-click="toggleModal()" data-placement="left" title="Invite your friends" tooltip>
+            <i class="icon-invite" data-toggle="tooltip"></i>
+        </a>
+        <a class="item item-disabled">
             <i class="icon-unlocked"></i>
         </a>
-        <a class="item" href="" ng-click="toggleModal()">
-            <i class="icon-invite"></i>
-        </a>
         <a class="item item-video-mute" href="" ng-click="toggleMuteVideo('video-mute')"
-           ng-class="{'active': isFeatureActive('video-mute')}">
+           ng-class="{'active': isFeatureActive('video-mute')}" data-placement="left" title="Mute" tooltip>
             <i class="icon-video-off"></i>
         </a>
         <a class="item item-audio-mute" href="" ng-click="toggleMuteAudio('audio-mute')"
-           ng-class="{'active': isFeatureActive('audio-mute')}">
+           ng-class="{'active': isFeatureActive('audio-mute')}" data-placement="left" title="Stop Video" tooltip>
             <i class="icon-mute"></i>
         </a>
-        <a class="item" href="" ng-click="toggleSide('chat')" ng-class="{'active': isFeatureActive('chat')}">
+        <a class="item" href="" ng-click="toggleSide('chat')" ng-class="{'active': isFeatureActive('chat')}"
+           data-placement="left" title="Toggle Chat" tooltip>
             <i class="icon-chat"></i>
         </a>
-        <a class="item item-disabled">
+        <a class="item item-disabled" data-placement="left" title="Recording meetings soon." tooltip>
             <i class="icon-record"></i>
         </a>
         <a class="item item-share" href="" ng-click="toggleScreenShare('screen-share')"
-           ng-class="{'active': isFeatureActive('screen-share')}">
+           ng-class="{'active': isFeatureActive('screen-share')}" data-placement="left" title="Share your screen" tooltip>
             <i class="icon-share"></i>
         </a>
         <a class="item item-share" href="" ng-click="toggleFrame('share-link')"
-           ng-class="{'active': isFeatureActive('share-link')}">
+           ng-class="{'active': isFeatureActive('share-link')}" data-placement="left" title="Share a website" tooltip>
             <i class="icon-web"></i>
         </a>
 
@@ -146,8 +147,8 @@
         <div class="top">
             <i class="icon-web"></i>
             <input type="text" class="url-input" ng-model="frameUrl"
-                   placeholder="http://www.reddit.com"
-                   ng-model-options="{updateOn : 'change blur'}"/>
+                                       placeholder="http://www.reddit.com"
+                                       ng-model-options="{updateOn : 'change blur'}"/>
         </div>
 
         <iframe id="ifr" ng-src="{{ trustSrc('https://cahoots.local:8080/proxy/' + frameUrl) }}" class="frame"></iframe>
