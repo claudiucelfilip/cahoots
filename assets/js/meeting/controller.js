@@ -170,9 +170,10 @@
             };
 
             $scope.toggleBot('bot-mute');
-            LoopVisualizer.addRemoveCallback(function() {
-                removeFeature('bot-mute');
-            });
+
+            $rootScope.removeFeature = removeFeature;
+
+
         });
 
 }(angular.module('cahoots')));

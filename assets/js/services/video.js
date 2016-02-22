@@ -32,6 +32,8 @@
                 $('#canvas').remove();
                 source.disconnect();
                 LoopVisualizer.remove();
+                $rootScope.removeFeature('bot-mute');
+
             }
 
             if ((needsForce && forced) || !needsForce) {
@@ -119,11 +121,14 @@
 
                 console.log(activeUsers)
 
+
                 if(activeUsers > 1) {
                     $('#mainVideo').show();
                     $('#canvas').remove();
                     source.disconnect();
                     LoopVisualizer.remove();
+                    $rootScope.removeFeature('bot-mute');
+
 
                 }
             });
@@ -178,6 +183,8 @@
                     $('#canvas').remove();
                     source.disconnect();
                     LoopVisualizer.remove();
+                    $rootScope.removeFeature('bot-mute');
+
 
                 }
             });
