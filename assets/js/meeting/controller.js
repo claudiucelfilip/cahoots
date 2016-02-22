@@ -12,6 +12,9 @@
 
             Pusher.init(Room.getId());
 
+
+
+
             // Modal
             $scope.showModal = false;
             $scope.toggleModal = function() {

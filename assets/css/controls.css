@@ -24,8 +24,8 @@
 
 .controls .item-disabled {
     opacity: 0.4;
-    pointer-events: none;
 }
+
 .controls .item-lock:after {
     content: '';
     display: inline-block;
@@ -36,7 +36,6 @@
 }
 
 .controls .item:hover, .controls .item:active {
-
     background: #222525;
 }
 
