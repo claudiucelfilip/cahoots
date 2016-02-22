@@ -99,3 +99,10 @@ button:active{
 .slider.active {
     transform: translateY(0);
 }
+
+body > div > canvas {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+}

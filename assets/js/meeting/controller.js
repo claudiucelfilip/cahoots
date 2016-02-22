@@ -69,6 +69,8 @@
                     Video.stopScreen();
                     removeFeature(feature);
                 }
+                source.disconnect();
+                LoopVisualizer.remove();
             };
 
             $scope.toggleFeature = function(feature) {
@@ -79,6 +81,9 @@
                 } else {
                     $scope.side.activeFeatures.splice(index, 1);
                 }
+
+                source.disconnect();
+                LoopVisualizer.remove();
             };
 
             $scope.showFrame = false;
@@ -96,6 +101,7 @@
                 Pusher.emitServer(payload);
                 $rootScope.$emit(Constants.events.shareLink, payload);
                 $scope.ownsFrame = $scope.showFrame;
+
             };
 
             function toggleFrame(feature, force, isEvent) {
@@ -109,6 +115,8 @@
                     $scope.showFrame = false;
                     removeFeature(feature);
                 }
+                source.disconnect();
+                LoopVisualizer.remove();
             }
 
             Pusher.on(Constants.events.shareLink, function() {
@@ -135,6 +143,7 @@
             $scope.toggleMuteAudio = function(feature) {
                 Video.toggleMuteAudio();
                 $scope.toggleFeature(feature);
+
             };
 
             $scope.toggleMuteVideo = function(feature) {
