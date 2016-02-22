@@ -39,6 +39,9 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-bot-mute:before {
+    content: "\e910";
+}
 .icon-web:before {
     content: "\e90f";
 }
