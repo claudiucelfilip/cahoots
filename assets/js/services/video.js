@@ -26,10 +26,10 @@
 
             if(self.streams.length === 0) {
                 $('#mainVideo').hide();
-                $('#bot').show();
+                $('#canvas').show();
             } else {
                 $('#mainVideo').show();
-                $('#bot').remove();
+                $('#canvas').remove();
                 source.disconnect();
                 LoopVisualizer.remove();
             }
@@ -64,7 +64,6 @@
 
 
             skylink.on('incomingStream', function (peerId, stream, isSelf, peerInfo) {
-                console.log('incomingStream')
                 var vid;
                 if (isSelf) {
                     if(!self.myStream) {
@@ -98,7 +97,6 @@
             });
 
             skylink.on('peerJoined', function (peerId, peerInfo, isSelf) {
-                console.log('peerJoined')
                 if(!isSelf) {
                     var payload = {
                         id: Utils.generateId(),
@@ -108,15 +106,29 @@
                     };
 
                     $rootScope.$emit(Constants.events.activityEvent, payload);
+                }
 
-                    $('#bot').remove();
+                var activeUsers = 0;
+                angular.forEach(self.streams, function(value) {
+                    if(value.active) {
+                        activeUsers++;
+                    }
+                });
+
+                console.log($('video').length);
+
+                console.log(activeUsers)
+
+                if(activeUsers > 1) {
+                    $('#mainVideo').show();
+                    $('#canvas').remove();
                     source.disconnect();
                     LoopVisualizer.remove();
+
                 }
             });
 
             skylink.on('peerLeft', function (peerId, peerInfo, isSelf) {
-                console.log('peerLeft')
                 // Remove video
                 var vid = document.getElementById(peerId);
                 $(vid).remove();
@@ -160,17 +172,17 @@
 
                 if(activeUsers === 1) {
                     $('#mainVideo').hide();
-                    $('#bot').show();
+                    $('#canvas').show();
                 } else {
                     $('#mainVideo').show();
-                    $('#bot').remove();
+                    $('#canvas').remove();
+                    source.disconnect();
+                    LoopVisualizer.remove();
 
                 }
             });
 
-
             skylink.on('mediaAccessSuccess', function (stream, peerInfo) {
-                console.log('mediaAccessSuccess')
                 var vid = document.getElementById('myvideo');
                 if (!vid) {
                     return;
