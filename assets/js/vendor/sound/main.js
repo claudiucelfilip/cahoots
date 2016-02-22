@@ -32,12 +32,11 @@ $(document).ready(function() {
 		'Find out how to get it <a href="http://get.webgl.org/">here</a>, or try restarting your browser.');
 	}else {
 		$('#loading').html('drop mp3 here or <a id="loadSample">load sample mp3</a>');
-		init();
 	}
 
 });
 
-function init() {
+function initBot() {
 
 	//init 3D scene
 	container = document.createElement('div');

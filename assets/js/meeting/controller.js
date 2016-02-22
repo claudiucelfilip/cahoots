@@ -3,6 +3,7 @@
 
     app.controller('MeetingCtrl',
         function ($scope, $state, $stateParams, $localStorage, $rootScope, Pusher, Constants, Video, Speech, Api, DataChan, Error, Utils, Room, $timeout, $sce, roomDetails) {
+            initBot();
 
             $scope.currentUser = $localStorage.userName.name;
             $scope.trustSrc = function(src) {
