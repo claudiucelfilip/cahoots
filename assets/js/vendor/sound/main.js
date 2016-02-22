@@ -70,7 +70,7 @@ function initBot() {
 	$(window).resize(onWindowResize);
 
 	onWindowResize(null);
-	audioContext = new window.webkitAudioContext();
+	audioContext = new window.AudioContext();
 	loadSampleAudio();
 
 }

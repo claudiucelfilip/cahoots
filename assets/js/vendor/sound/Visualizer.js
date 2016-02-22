@@ -63,13 +63,21 @@ var LoopVisualizer = (function() {
 
 	}
 
+	var removeCallback;
+
+	function addRemoveCallback(fn) {
+		removeCallback = fn;
+	}
+
 	function remove() {
 
 		if (loopHolder){
 			for(var i = 0; i < RINGCOUNT; i++) {
 				loopHolder.remove(rings[i]);
 			}
-
+		}
+		if (removeCallback) {
+			removeCallback();
 		}
 	}
 
@@ -119,6 +127,7 @@ var LoopVisualizer = (function() {
 		init:init,
 		update:update,
 		remove:remove,
+		addRemoveCallback:addRemoveCallback,
 		loopHolder:loopHolder
 	};
 	}());
