@@ -3,7 +3,6 @@
 
     app.controller('MeetingCtrl',
         function ($scope, $state, $stateParams, $localStorage, $rootScope, Pusher, Constants, Video, Speech, Api, DataChan, Error, Utils, Room, $timeout, $sce, roomDetails) {
-            initBot();
 
             $scope.currentUser = $localStorage.userName.name;
             $scope.trustSrc = function(src) {
@@ -58,6 +57,20 @@
 
                 $scope.toggleFeature(feature);
             };
+
+
+            $scope.toggleBot = function(feature) {
+                if (!$scope.isFeatureActive(feature)) {
+                    addFeature(feature);
+                    initBot();
+                } else {
+                    removeFeature(feature);
+                    source.disconnect();
+                    LoopVisualizer.remove();
+
+                }
+            };
+
 
             $scope.toggleScreenShare = function(feature) {
 
@@ -155,6 +168,8 @@
             $scope.isFeatureActive = function(feature) {
                 return $scope.side.activeFeatures.indexOf(feature) !== -1;
             };
+
+            $scope.toggleBot('bot-mute');
         });
 
 }(angular.module('cahoots')));
