@@ -71,7 +71,6 @@
                 $scope.messages.push(message);
                 message.translate();
 
-                Pusher.emit(Constants.events.activityEvent, data);
                 Pusher.emitServer(data);
             };
 

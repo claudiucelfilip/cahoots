@@ -43,6 +43,10 @@
                     }
                 }
 
+                if(str.length > 50) {
+                    recognizer.abort();
+                }
+
                 var data = {
                     type: Constants.types.messageVoice,
                     id: currentMessageId,
