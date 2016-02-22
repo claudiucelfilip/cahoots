@@ -21,6 +21,7 @@
                 changeFrameLink: 'client-change-frame-link',
                 messageLocal: 'client-messageLocal',
                 serverActivityEvent: 'client-activity-event',
+                changeFramePosition: 'client-frame-position'
             },
             types: {
                 message: 'message'
