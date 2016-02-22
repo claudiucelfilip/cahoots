@@ -20,11 +20,19 @@
                 shareLink: 'client-share-link',
                 changeFrameLink: 'client-change-frame-link',
                 messageLocal: 'client-messageLocal',
+                activityEvent: 'client-activity',
                 serverActivityEvent: 'client-activity-event',
                 changeFramePosition: 'client-frame-position'
             },
             types: {
-                message: 'message'
+                messageVoice: 'messageVoice',
+                messageText: 'messageText',
+                join: 'join',
+                leave: 'leave',
+                mute: 'mute',
+                noVideo: 'noVideo',
+                shareScreen: 'shareScreen',
+                stopShareScreen: 'stopShareScreen'
             }
         })
         .config([

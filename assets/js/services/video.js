@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    app.service('Video', function () {
+    app.service('Video', function ($stateParams, $rootScope, Pusher, Utils, Constants, Api, $localStorage) {
         var skylink, recordRTC;
 
         var self = this;
@@ -28,7 +28,6 @@
                 attachMediaStream(mainVideo, stream);
                 $(stream.el).addClass('active').siblings().removeClass('active');
             }
-
         });
 
         this.setMainStreamById = function(streamId, forced) {
@@ -49,13 +48,13 @@
         this.init = function (roomId) {
             skylink = window.skylink = new Skylink();
 
+            skylink.setUserData($localStorage.userName);
 
             skylink.setDebugMode(true);
 
-            skylink.on('incomingStream', function (peerId, stream, isSelf) {
 
+            skylink.on('incomingStream', function (peerId, stream, isSelf, peerInfo) {
                 var vid;
-
                 if (isSelf) {
                     if(!self.myStream) {
                         vid = document.getElementById('myvideo');
@@ -87,7 +86,23 @@
 
             });
 
+            skylink.on('peerJoined', function (peerId, peerInfo, isSelf) {
+                if(!isSelf) {
+                    var payload = {
+                        id: Utils.generateId(),
+                        type: Constants.types.join,
+                        userName: peerInfo.userData,
+                        created: new Date()
+                    };
+
+                    Pusher.emitServer(payload);
+                    $rootScope.$emit(Constants.events.activityEvent, payload);
+                }
+            });
+
             skylink.on('peerLeft', function (peerId, peerInfo, isSelf) {
+
+                // Remove video
                 var vid = document.getElementById(peerId);
                 $(vid).remove();
 
@@ -98,10 +113,33 @@
                 if (index !== -1) {
                     self.streams.splice(index, 0);
                 }
+
+                // Notify server
+                if(!isSelf) {
+                    var payload = {
+                        id: Utils.generateId(),
+                        type: Constants.types.leave,
+                        userName: peerInfo.userData,
+                        created: new Date()
+                    };
+
+                    Pusher.emitServer(payload);
+                    $rootScope.$emit(Constants.events.activityEvent, payload);
+                }
+
+                // Remove from Room
+                Api.deleteUser({ second: $stateParams.roomId, fourth: peerInfo.userData.id },
+                    function(response) {
+
+                    },
+                    function(error) {
+                        console.log(error)
+                    }
+                );
             });
 
 
-            skylink.on('mediaAccessSuccess', function (stream) {
+            skylink.on('mediaAccessSuccess', function (stream, peerInfo) {
                 var vid = document.getElementById('myvideo');
                 if (!vid) {
                     return;
@@ -113,15 +151,36 @@
                 self.setMainStream(stream);
                 self.streams.push(stream);
                 self.myStream = stream;
-
             });
 
 
             this.shareScreen = function(errorCallback) {
+                // Notify server
+                var payload = {
+                    id: Utils.generateId(),
+                    type: Constants.types.shareScreen,
+                    userName: $localStorage.userName,
+                    created: new Date()
+                };
+
+                Pusher.emitServer(payload);
+                $rootScope.$emit(Constants.events.activityEvent, payload);
+
                 skylink.shareScreen(errorCallback);
             };
 
             this.stopScreen = function() {
+                // Notify server
+                var payload = {
+                    id: Utils.generateId(),
+                    type: Constants.types.stopShareScreen,
+                    userName: $localStorage.userName,
+                    created: new Date()
+                };
+
+                Pusher.emitServer(payload);
+                $rootScope.$emit(Constants.events.activityEvent, payload);
+
                 self.myStream = null;
                 skylink.stopScreen();
             };
@@ -136,11 +195,34 @@
             }
 
             this.toggleMuteAudio = function() {
+                // Notify server
+                var payload = {
+                    id: Utils.generateId(),
+                    type: Constants.types.mute,
+                    value: !streamConfig.audioMuted,
+                    userName: $localStorage.userName,
+                    created: new Date()
+                };
+
+                Pusher.emitServer(payload);
+                $rootScope.$emit(Constants.events.activityEvent, payload);
+
                 streamConfig.audioMuted = !streamConfig.audioMuted;
                 setStream();
             };
 
             this.toggleMuteVideo = function() {
+                var payload = {
+                    id: Utils.generateId(),
+                    type: Constants.types.noVideo,
+                    value: !streamConfig.videoMuted,
+                    userName: $localStorage.userName,
+                    created: new Date()
+                };
+
+                Pusher.emitServer(payload);
+                $rootScope.$emit(Constants.events.activityEvent, payload);
+
                 streamConfig.videoMuted = !streamConfig.videoMuted;
                 setStream();
             };

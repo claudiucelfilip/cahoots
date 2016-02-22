@@ -22,10 +22,50 @@
         <ul class="chat-messages list-group">
             <li class="list-group-item" ng-hide="messages">No chat messages available</li>
             <li class="list-group-item" ng-repeat="message in messages track by $index">
-                {{ message.userName.name }}:
-                <span ng-show="!message.translations[currentLang.value]">{{ message.text }}</span>
-                <span ng-show="message.translations[currentLang.value]">{{ message.translations[currentLang.value].text }}</span>
 
+                <div ng-show="message.type == 'messageVoice'">
+                    {{ message.userName.name }} (captioned):
+                    <span ng-show="!message.translations[currentLang.value]">{{ message.text }}</span>
+                    <span ng-show="message.translations[currentLang.value]">{{ message.translations[currentLang.value].text }}</span>
+                </div>
+
+                <div ng-show="message.type == 'messageText'">
+                    {{ message.userName.name }}:
+                    <span ng-show="!message.translations[currentLang.value]">{{ message.text }}</span>
+                    <span ng-show="message.translations[currentLang.value]">{{ message.translations[currentLang.value].text }}</span>
+                </div>
+
+                <div ng-show="message.type == 'join'">
+                    {{ message.userName.name }} joined.
+                </div>
+
+                <div ng-show="message.type == 'leave'">
+                    {{ message.userName.name }} left.
+                </div>
+
+                <div ng-show="message.type == 'mute' && message.value == 1">
+                    {{ message.userName.name }} muted his microphone.
+                </div>
+
+                <div ng-show="message.type == 'mute' && message.value == 0">
+                    {{ message.userName.name }} unmuted his microphone.
+                </div>
+
+                <div ng-show="message.type == 'noVideo' && message.value == 1">
+                    {{ message.userName.name }} stopped the video sharing.
+                </div>
+
+                <div ng-show="message.type == 'noVideo' && message.value == 0">
+                    {{ message.userName.name }} started the video sharing.
+                </div>
+
+                <div ng-show="message.type == 'shareScreen'">
+                    {{ message.userName.name }} shared the screen.
+                </div>
+
+                <div ng-show="message.type == 'stopShareScreen'">
+                    {{ message.userName.name }} stopped sharing the screen.
+                </div>
             </li>
         </ul>
     </div>
